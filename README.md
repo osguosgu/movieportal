@@ -10,6 +10,7 @@
 		rvm install ruby-2.1.1
 		rvm --create 2.1.1@movieportal
 		rvm use 2.1.1@movieportal
+		gem install rails --no-ri --no-rdoc
 
 5. Clone this repo
 6. Enter in repo directory
@@ -18,7 +19,7 @@
 		bundle install --without production
 
 8. Run `foreman start`
-9. Open browser and go to http://localhost:8080
+9. Open browser and go to http://localhost:5000
 
 [ruby]: https://www.ruby-lang.org/en/
 [rvm]: https://rvm.io/rvm
