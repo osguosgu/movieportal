@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @hub.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @hub.description %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @hub.user %>
+</p>
+
+<%= link_to 'Edit', edit_hub_path(@hub) %> |
+<%= link_to 'Back', hubs_path %>

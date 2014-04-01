@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  rating: 1.5
+  review: MyText
+  watchlist: false
+  library: false
+  hub_id: 
+  hub_type: Hub
+
+two:
+  rating: 1.5
+  review: MyText
+  watchlist: false
+  library: false
+  hub_id: 
+  hub_type: Hub

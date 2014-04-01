@@ -1,0 +1,31 @@
+<h1>Listing hubs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>User</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @hubs.each do |hub| %>
+      <tr>
+        <td><%= hub.name %></td>
+        <td><%= hub.description %></td>
+        <td><%= hub.user %></td>
+        <td><%= link_to 'Show', hub %></td>
+        <td><%= link_to 'Edit', edit_hub_path(hub) %></td>
+        <td><%= link_to 'Destroy', hub, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Hub', new_hub_path %>
