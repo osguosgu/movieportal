@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.1.1'
+ruby '1.9.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.4'
@@ -30,15 +30,18 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
-gem 'unicorn'
+# OAuth
+gem 'omniauth'
+gem 'omniauth-facebook'
 
 group :production do
-	gem 'pg'
-	gem 'rails_12factor'
+  gem 'pg'
+  gem 'rails_12factor'
+  gem 'unicorn'
 end
 
 group :development do
-	gem 'sqlite3'
+  gem 'sqlite3'
 end
 
 group :doc do

@@ -21,3 +21,6 @@
 # Ignore auto generated files
 *.swp
 .DS_Store
+
+/.idea/*
+/Gemfile.lock
