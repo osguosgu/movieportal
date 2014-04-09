@@ -39,6 +39,9 @@ gem 'jbuilder', '~> 1.2'
 gem 'omniauth'
 gem 'omniauth-facebook'
 
+# Fonts CSS
+gem "font-awesome-rails"
+
 group :production do
   gem 'pg'
   gem 'rails_12factor'
