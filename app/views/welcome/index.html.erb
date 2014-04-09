@@ -1,2 +1,108 @@
-<h1>Welcome#index</h1>
-<p>Find me in app/views/welcome/index.html.erb</p>
+		<!--
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) return;
+			js = d.createElement(s); js.id = id;
+			js.src = "https://connect.facebook.net/en_US/all.js#xfbml=1";
+			fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));</script>
+		-->
+		<!--
+		<section class="nav">
+		<ul>
+			<li><a href="#like">Like-buttons</a></li>
+			<li><a href="#feeds">Social feeds</a></li>
+			<li><a href="#contact">Contact information</a></li>
+		</ul>
+		</section>
+
+		http://www.flickr.com/photos/dmmaus/386444385/sizes/l/
+		http://www.flickr.com/photos/arekev/3936196799/sizes/l/
+		-->
+
+		<section id="banner">
+		<section>
+		<h1>Welcome to MovieHub</h1>
+
+
+		<div class="row">
+			<div class="col-md-4">
+				<p>Find and share movies that interest you. Discover movies from new indie titles to old classics.</p>
+			</div>
+			<div class="col-md-4">
+				<p>Your own movie library. Browse an endless collection of movies with ease.</p>
+			</div>
+			<div class="col-md-4">
+				<p>Connect with your friends.</p>
+			</div>
+		</div>
+
+		<div class="signup">
+			<h2>Get Started</h2>
+			<a href="#" class="fb-login">Log in using Facebook</a>
+			<a href="#" class="g-login">Log in using Google</a>
+		</div>
+
+		<div class="readmore">
+			<a href="#more">Read more<br>
+				<i class="fa fa-chevron-down"></i></a>
+		</div>
+		</section>
+		</section>
+
+		<section id="more">
+		<div class="row">
+			<div class="col-md-6">
+				Oltiin tänää kukko pärssisen kanssa PANIIKISSA tekemässä C-KOODIA ku joku hiiri
+				(epäilemättä fuksi) tuli kyselemään apua et miten PYTHONISSA toteutetaan
+				oikeaoppinen moniperintä!! Kelatkaa, tulee meiltä kysymään tällasta, vaikka
+				kaikki tietää ette me ei TODELLAKAAN koodata tulkattuja tai VM kieliä!!!
+				Käskettiin sen painua MAARILLE pyytämään neuvoja joltain PYTHON 1 kurssin
+				assarilta tai vaihtoehtosesti VARTIJALTA (taitotaso samalla tasolla!!!). Kaveri
+				lähtee siitä lätkimään tosi nopeesti hätääntyneenä ja unohtaa  vielä puolikkaan
+				MAD CROCIN pöydälle. Kaikkea sitä pitääki todistaa.
+				</div><div class="col-md-6">
+				Tullaan myöhemmin lounaalta, ja kelatkaa, tää sama kaveri istuu kukkon
+				VAKIPAIKALLA ja ähertää siinä tomerasti jotain. Mennään kattomaan lähempää ni
+				kaverilla on ECLIPSE auki ja väkertää sillä jotain PYTHONIA tai muuta
+				amatöörien ja FUKSIEN kieltä! Ollaan ällikällä lyötyjä tän kaverin
+				amatöörimäisyydestä, KAIKKI TIETÄÄ että koodia ei todellakaan kirjoteta muuta
+				ku VIMILLÄ tai suoraan reikäkorteille! Kukko heittää siihen heti: "Meinaatko
+				ihan KVANTTITASOLLE mennä tolla eclipsellä!" (en tiedä mistä se keksii näitä..
+				varmaan jotain sähköjuttuja, Kukko opiskelee tietysti SÄHKÖLLÄ koska kukon
+				mukaan siellä liikutaan RAUDAN ALAPUOLELLA!!!!).  Kaveri sössöttää siihen takas
+				ettei kuulemma tiedä mikä on kvantti kun ei oo vielä käyny kvanttifysiikan
+				KURSSIA!! Kaveri yrittää selkeesti bluffata meitä koska tää JÄTKÄ ei
+				todellakaan voi olla muualta kun INFOLTA missä ei todellakaan käydä
+				KVANTTIFYSIIKKAA!! Kukko muistuttaa kaverille et eikös tänää illalla olla
+				HAVAITSEMISEN kurssin leikekirja-projektityön (koko kurssin ainut suoritus!!!
+				ei tenttiä!!) palautus ( miten se muistaa näitä !?!?!?!). Kaveri katoo siitä ku
+				pieru saharaan ja jättää tunnarit auki koneeseen. Ajetaan tietysti RAINBOW
+				TABLEJA kaverin tunnareilla niksula ADMIN SALASANAA VASTAAN!! Tästä tulee
+				taatusti sille ONGELMIA. Oppiipaahan että MEILLE EI TODELLAKAAN VALEHDELLA!!!
+		</div></div>
+		</section>
+
+		<small>Background photo &copy; <a href="http://www.flickr.com/photos/andreiz/">andreiz</a>.</small>
+
+		<!-- http://www.flickr.com/photos/andreiz/361172490/sizes/o/ -->
+
+		<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+		<script>
+			$(function() {
+				$('a[href*=#]:not([href=#])').click(function() {
+					if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+
+						var target = $(this.hash);
+						target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+						if (target.length) {
+							$('html,body').animate({
+								scrollTop: target.offset().top
+							}, 500);
+							return false;
+						}
+					}
+				});
+			});
+		</script>

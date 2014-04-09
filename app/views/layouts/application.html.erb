@@ -4,11 +4,146 @@
 		<title>Movieportal</title>
 		<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
 		<%= csrf_meta_tags %>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet' type='text/css'>
+		<style type="text/css">
+			body {
+				font-family: 'Open Sans';
+				font-weight: 400;
+				text-align: justify;
+			}
+
+			#banner {
+				background: url('http://farm1.staticflickr.com/144/361172490_86290fb726_o.jpg') rgba(0,0,0,0.9);
+				background-size: cover;
+				background-attachment: fixed;
+				background-position: bottom center;
+				height: 100vh;
+				min-height: 450px;
+				color: #fff;
+				text-align: center;
+				text-shadow: 1px 1px 1px rgba(101,101,101,0.2);
+				position relative;
+			}
+
+			#banner h1 {
+				font-size: 50px;
+				font-weight: 400;
+				font-family: Roboto, "Helvetica-Neue","Helvetica Neue",Helvetica,Arial,sans-serif;
+
+				color: #fff;
+			}
+			#banner h2 {
+				font-size: 32px;
+				font-weight: 300;
+			}
+
+			#banner section {
+				width: 100%;
+				height: 100%;
+				background: rgba(0,0,0,0.5);
+				padding: 20px;
+			}
+
+			#banner .row {
+				padding: 30px;
+				padding-bottom: 0;
+			}
+			#banner p {
+				font-size: 22px;
+				font-weight: 300;
+			}
+
+			h1,h2,h3 {
+				font-weight: 300;
+			}
+
+			.addr span {
+				display: block;
+			}
+
+			.dark { background: #333; }
+			.fb-like { margin-bottom: 20px; }
+			.fb-btns > div { min-height: 300px; }
+
+			.signup a {
+				border: #333 1px solid;
+				border-radius: 3px;
+				box-shadow: #333 1px 1px;
+				display: inline-block;
+				padding: 10px;
+				text-transform: uppercase;
+				font-size: 12px;
+				margin: 10px;
+				color: #fff;
+				background: rgba(0,0,0,0.9);
+
+				background: #89E80C;
+				background: #00E2E8;
+				background: #00A5FF;
+				background: #00bc9e;
+			}
+
+			a, a:hover {
+				text-decoration: none;
+				color: #EEE;
+			}
+			a:hover {
+				color: #FFF;
+			}
+
+			.nav {
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				background: #333;
+				z-index: 999;
+				padding: 0;
+			}
+			.nav ul {
+				list-style-type: none;
+				text-align: center;
+				margin: 0 auto;
+			}
+			.nav li {
+				display: inline-block;
+				list-style-type: none;
+			}
+
+			.addr {
+				position: absolute;
+				background: rgba(255,255,255,0.9);
+				bottom: 100px;
+				left: 100px;
+			}
+			.gmap-wrapper {
+				overflow:hidden;
+				height:300px;
+				width:100%;
+			}
+
+			.readmore {
+				position: absolute;
+				bottom: 50px;
+				left: 0;
+				right: 0;
+				margin: 0 auto;
+			}
+			.readmore .fa {
+				font-size: 32px;
+			}
+			.readmore a:hover {
+				color: #00E2E8;
+			}
+
+			#more {
+				padding: 50px;
+			}
+
+		</style>
 	</head>
 	<body>
-
 		<%= yield %>
-
-		<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
 	</body>
 </html>
