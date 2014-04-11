@@ -1,0 +1,160 @@
+#wrapper {
+    padding-left: 250px;
+    transition: all 0.4s ease 0s;
+}
+
+.topbar {
+    position: fixed;
+    left: 250px;
+    top: 0;
+    right: 0;
+    z-index: 1030;
+    transition: all 0.4s ease 0s;
+}
+.topbar input {
+}
+.topbar-content {
+    padding: 8px 20px;
+    background-color: rgb(51,51,51);
+    height: 50px;
+}
+.topbar-content input {
+    margin-top: 2px;
+}
+
+.topbar-title {
+    font-size: 18px;
+    color: #1E9C89;
+    padding: 9px 0 0 10px;
+    text-shadow: 1px 1px 1px rgba(20, 20, 20, 0.75);
+    border-bottom: #222 1px solid;
+    height: 50px;
+}
+.topbar-title img {
+    margin-right: 10px;
+}
+
+#sidebar-wrapper {
+    margin-left: -250px;
+    left: 250px;
+    width: 250px;
+    position: fixed;
+    height: 100%;
+    overflow-y: auto;
+    z-index: 1000;
+    transition: all 0.4s ease 0s;
+
+    background-color: #282828;
+    -webkit-box-shadow: inset -5px 0px 14px 0px rgba(0,0,0,0.45);
+    -moz-box-shadow: inset -5px 0px 14px 0px rgba(0,0,0,0.45);
+    box-shadow: inset -5px 0px 14px 0px rgba(0,0,0,0.45);
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: relative;
+}
+
+.page-content {
+    position: absolute;
+    left: 0;
+    top: 60px;
+}
+.sidebar-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar-nav ul {
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-nav span {
+line-height: normal;
+font-size: 14px;
+color: #a8a8a8;
+font-weight: 400;
+}
+
+.sidebar-nav li a {
+line-height: normal;
+font-size: 14px;
+padding: 10px 10px 10px 11px;
+color: #a8a8a8;
+display: block;
+font-weight: 400;
+text-decoration: none!important;
+position: relative;
+}
+
+.sidebar-nav>li>a>i {
+margin-right: 5px;
+width: 15px;
+display: inline-block;
+text-align: center;
+position: relative;
+}
+
+.sidebar-nav li li a {
+    padding-left: 60px;
+}
+
+.sidebar-nav li a:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.2);
+    background: #104954;
+    background: #212121;
+    text-decoration: none;
+}
+
+.sidebar-nav li a:active, .sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+.sidebar-nav .badge {
+    font-size: 10px;
+    background-color: #333;
+    color: #428bca;
+
+}
+
+#menu-toggle {
+    display: none;
+}
+
+.inset {
+    padding: 20px;
+}
+
+@media (max-width:767px) {
+
+    #wrapper {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        left: 0;
+    }
+
+    #wrapper.active {
+        position: relative;
+        left: 250px;
+    }
+
+    #wrapper.active #sidebar-wrapper {
+        left: 250px;
+        width: 250px;
+        transition: all 0.4s ease 0s;
+    }
+
+    #menu-toggle {
+        display: inline-block;
+    }
+
+    .inset {
+        padding: 15px;
+    }
+
+}

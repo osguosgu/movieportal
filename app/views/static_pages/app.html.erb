@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="mdb">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Movie Portal</title>
+  <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+
+  <%= stylesheet_link_tag    "application", media: "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+
+<body ng-controller="MainCtrl">
+
+<div id="wrapper" ng-cloak ng-class="{active: sidebar}" ng-swipe-left="{active: true}" ng-swipe-right="{active: false}">
+
+  <!-- topbar -->
+  <div class="topbar">
+
+    <div class="row">
+      <div class="topbar-content">
+
+        <a href="" id="menu-toggle" ng-click="sidebar=!sidebar" class="btn btn-primary pull-left" title="Show Sidebar"><i class="fa fa-bars"></i></a>
+
+        <nav class="icon-nav pull-right">
+          <ul>
+            <li><a href="#" class="fa fa-fw fa-globe"><span class="sr-only">Notifications</span></a></li>
+            <li><a href="#" class="fa fa-fw fa-comments"><span class="sr-only">Messages</span></a></li>
+          </ul>
+        </nav>
+        <a href="" class="btn btn-primary pull-right" data-toggle="modal" data-target="#paymentModal">
+          <i class="fa fa-pencil-square-o"></i> <span class="hide-sm">New Review</span>
+        </a>
+
+        <div class="col-xs-7">
+          <input class="form-control" type="search" placeholder="Search for movies, users or groups" ng-model="search" options="exampleOptions" datasets="exampleData" sfTypeahead>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Sidebar -->
+  <div id="sidebar-wrapper">
+
+    <div class="topbar-title"><img ng-src="http://lorempixel.com/30/30/people/" alt="" class="pull-left"> {{user}}</div>
+
+    <ul class="sidebar-nav">
+      <li><a href="#/"><i class="fa fa-fw fa-lg fa-home"></i> <span>Dashboard</span></a></li>
+      <li><a href="#/movies"><i class="fa fa-fw fa-lg fa-film"></i> <span>Movies</span></a></li>
+      <li><a href="#/settings"><i class="fa fa-fw fa-lg fa-group"></i> <span>Groups</span></a>
+        <ul>
+          <li ng-repeat="grp in groups"><a ng-href="#/groups/{{slug(grp.name)}}">{{grp.name}} <span class="badge pull-right" ng-if="grp.notifications > 0">{{grp.notifications}}</span></a></li>
+        </ul>
+      </li>
+      <li><a href="" ng-click="popup('todo')"><i class="fa fa-fw fa-lg fa-eye"></i> <span>Watchlist</span></a></li>
+      <li><a href="" ng-click="popup('todo')"><i class="fa fa-fw fa-lg fa-comments"></i> <span>Discussions</span></a></li>
+      <li><a href="#/about"><i class="fa fa-info"></i> Profile</a></li>
+      <li><a href="/" ng-click="$parent.loggedIn=false"><i class="fa fa-sign-out"></i> Logout</a></li>
+    </ul>
+  </div>
+
+
+  <!-- Page content -->
+  <div id="page-content-wrapper">
+
+    <div class="page-content inset dn-fade-left" ng-view>
+      <%= yield %>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- modal //todo move to template -->
+<div ng-controller="MovieDetailCtrl" class="modal fade movieModal" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h3>{{movie.title}} ({{movie.year}})
+          <ul class="icon-menu pull-right">
+            <li><a href="" ng-click="toggleWatchlist(movie)" ng-class="{active: movie.watchlist}"><i class="fa fa-fw fa-eye"></i></a></li>
+            <li><a href=""><i class="fa fa-fw fa-comment"></i></a></li>
+            <li><a href="" ng-click="remove(movie)"><i class=" fa fa-fw fa-times"></i></a></li>
+          </ul>
+        </h3>
+      </div>
+      <div class="modal-body">
+        <img class="media-object pull-left" alt="" ng-src="{{movie.img}}">
+
+        <div class="media-body movie">
+          <ul class="details">
+            <li><strong><a href="#">IMDb:</a></strong> {{movie.rating}} from {{movie.votes}} users</li>
+            <li><strong>Ratings:</strong> Average 8.3 | IMDb 7.3 | Me 6.5</li>
+            <li><strong>Director:</strong> {{movie.director}}</li>
+            <li class="genres" ng-if="item.genres">
+              <span ng-repeat="genre in movie.genres">{{genre}}</span>
+            </li>
+          </ul>
+          <div class="plot">
+            {{movie.plot}}
+          </div>
+        </div>
+        <ul class="comments clearfix" ng-if="movie.comments.length>0">
+          <li ng-repeat="c in movie.comments | orderBy:date:true | limitTo:4">
+            <span class="author">{{c.user}}:</span> {{c.comment}}
+            <span class="time-ago" am-time-ago="c.date"></span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- notification container -->
+<div growl></div>
+
+<script>
+
+    window.addEventListener('load', function() {
+        FastClick.attach(document.body);
+    }, false);
+
+    $("#page-content-wrapper").click(function (e) {
+        if($("#wrapper").hasClass("active")) {
+            $("#wrapper").removeClass("active");
+            return false;
+        }
+    });
+</script>
+
+</body></html>

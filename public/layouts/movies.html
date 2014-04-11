@@ -1,0 +1,133 @@
+<h2>Movies
+<section class="pull-right display-mode">
+<select class="form-control" ng-model="movieSort">
+<option value="rating-imdb" selected>Sort by rating in IMDb</option>
+<option ng-value="'rating-' + $index" ng-repeat="grp in groups">Sort by rating in {{grp.name}}</option>
+<option value="title">Sort by title</option>
+<option value="year">Sort by release year</option>
+<option value="date">Sort by date modified</option>
+</select>
+
+<span class="hide-sm">Display mode:</span>
+
+<div class="btn-group display-menu">
+<a ng-click="display(0)" ng-class="{active: displayMode==0}" class="btn btn-default" id="disp-th" href=""><i class="fa fa-fw fa-th"></i></a>
+<a ng-click="display(1)" ng-class="{active: displayMode==1, switch: displayMode==0}" class="btn btn-default" href=""><i class="fa fa-fw fa-th-large"></i></a>
+<a ng-click="display(2)" ng-class="{active: displayMode==2}" class="btn btn-default" href=""><i class="fa fa-fw fa-table"></i></a>
+</div>
+</section></h2>
+
+<section class="widget">
+<a href="" ng-click="showFilters=!showFilters"><h3><i class="fa fa-fw fa-cog"></i> Filters <i class="fa fa-fw pull-right" ng-class="{'fa-chevron-down': showFilters, 'fa-chevron-up': !showFilters}"></i></h3></a>
+<div class="row" collapse="!showFilters">
+
+<div class="col-md-4">
+
+
+<input class="form-control input-transparent" type="search" ng-model="moviesQuery" placeholder="Filter movies...">
+
+<section class="yearPicker">
+<header ng-switch="selectedYears()" ng-click="showYears=!showYears">
+<span ng-switch-when="0">All years</span>
+<span ng-switch-when="1">{{yearEnd}} and older</span>
+<span ng-switch-when="2">{{yearStart}} and newer</span>
+<span ng-switch-when="3">{{yearStart}}</span>
+<span ng-switch-default>Years {{yearStart}} - {{yearEnd}}</span>
+</header>
+<div collapse="!showYears">
+From
+<select ng-model="yearStart">
+<option value="0">Any</options>
+<option ng-repeat="y in yearRange" ng-value="y">{{y}}</option>
+</select>
+to
+<select ng-model="yearEnd">
+<option value="0">Any</options>
+<option ng-repeat="y in yearRange" ng-value="y">{{y}}</option>
+</select>
+</div>
+</section>
+
+</div>
+<div class="col-md-8">
+<fieldset class="genreFilters">
+<legend>Filter by genre</legend>
+<label ng-class="{'active': genre.selected}" ng-repeat="genre in genreFilters"><input type="checkbox" ng-model="genre.selected"> {{genre.name}}</label>
+
+<a class="btn btn-primary" ng-class="{'active':genresSelected() == genres.length}" ng-click="selectGenres(true)">
+<i class="fa fa-fw fa-check-square-o"></i> Select all</a>
+
+<a class="btn btn-primary" ng-class="{'active':genresSelected() == 0}" ng-click="selectGenres(false)">
+<i class="fa fa-fw fa-square-o"></i> Select none</a>
+</fieldset>
+</div>
+</div>
+</section>
+
+<section class="widget" ng-show="displayMode==2 && filteredMovies.length">
+<table class="table movieTable">
+<thead><tr>
+<th ng-click="sortBy('title')">Title</th>
+<th ng-click="sortBy('year')">Year</th>
+<th>Genres</th>
+<th ng-click="sortBy('rating-imdb')">IMDb</th>
+<th ng-click="sortBy('rating-'+$index)" ng-repeat="grp in groups">{{grp.name}}</th>
+<th>Me</th>
+</tr></thead>
+<tbody>
+<tr ng-repeat="movie in filteredMovies = (movies | orderBy:movieSort:reverse | filter: movieFilter)">
+<td>{{movie.title}}</td>
+<td>{{movie.year}}</td>
+<td class="genres"><span ng-repeat="genre in movie.genres">{{genre}}</span></td>
+<td>{{movie.rating}} <span class="gray">({{movie.votes}} votes)</span></td>
+<td ng-repeat="grp in groups"><a href="" ng-click="sortBy('rating-'+slug(grp.name))">-</a></th>
+<td>
+<ul class="icon-menu">
+<li><a href="" ng-click="toggleWatchlist(movie)" ng-class="{active: movie.watchlist}"><i class=" fa fa-fw fa-eye"></i></a></li>
+<li><a href=""><i class=" fa fa-fw fa-comment"></i></a></li>
+<li><a href="" ng-click="remove(movie)"><i class=" fa fa-fw fa-times"></i></a></li>
+</ul>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<div class="movieListing" ng-if="displayMode!=2">
+<div class="tile" ng-class="{'tile-lg': displayMode==1}" ng-repeat="movie in filteredMovies track by $index">
+
+<section class="widget">
+<h3><a data-toggle="modal" data-target="#paymentModal" ng-click="selectMovie(movie)" href="">{{movie.title}} ({{movie.year}}) </a>
+<ul class="icon-menu pull-right">
+<li><a href="" ng-click="toggleWatchlist(movie)" ng-class="{active: movie.watchlist}"><i class="fa fa-fw fa-eye"></i></a></li>
+<li><a href=""><i class="fa fa-fw fa-comment"></i></a></li>
+<li><a href="" ng-click="remove(movie)"><i class=" fa fa-fw fa-times"></i></a></li>
+</ul>
+</h3>
+<img class="media-object pull-left" alt="" ng-src="{{movie.img}}">
+
+<div class="media-body movie">
+<ul class="details">
+<li><strong><a href="#">IMDb:</a></strong> {{movie.rating}} from {{movie.votes}} users</li>
+<li><strong>Ratings:</strong> Average 8.3 | IMDb 7.3 | Me 6.5</li>
+<li class="genres" ng-if="item.genres">
+<span ng-repeat="genre in movie.genres">{{genre}}</span>
+</li>
+</ul>
+<div class="plot">
+{{movie.plot}}
+</div>
+</div>
+<ul class="comments clearfix" ng-if="movie.comments.length>0">
+<li ng-repeat="c in movie.comments | orderBy:date:true | limitTo:4">
+    <span class="author">{{c.user}}:</span> {{c.comment}}
+    <span class="time-ago" am-time-ago="c.date"></span>
+</li>
+</ul>
+<input type="text" ng-enter="addComment(movie,index)" placeholder="Comment..." ng-model="comment[$index]" style="width:90%">
+
+</section>
+</div>
+</div>
+<div class="widget widget-alert" ng-if="filteredMovies.length==0">No movies to show.</div>

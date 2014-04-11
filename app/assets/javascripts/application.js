@@ -10,8 +10,24 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require angular
+
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+//= require moment-with-langs.min
+//= require angular
+//= require angular-route
+//= require angular-resource
+//= require angular-animate
+//= require angular-touch
+//= require angular-growl.min
+//= require angular-moment.min
+//= require underscore-min
+//= require animate
+//= require fastclick
+//= require bootstrap.min
+//= require bootstrap3-typeahead
+//= require ui-bootstrap.min
+//= require typeahead.bundle.min
+//= require angular-typeahead.min
+//= require moviePortalApp
 //= require_tree .
