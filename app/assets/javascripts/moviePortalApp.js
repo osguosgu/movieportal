@@ -20,6 +20,10 @@ mdb.config(['$routeProvider',
       templateUrl: '../layouts/group_detail.html',
       controller: 'HubsCtrl'
     }).
+    when('/hubs', {
+            templateUrl: '../layouts/groups.html',
+            controller: 'HubsCtrl'
+        }).
     when('/movies', {
       templateUrl: '../layouts/movies.html',
       controller: 'MoviesCtrl'

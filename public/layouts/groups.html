@@ -1,0 +1,44 @@
+
+
+<h2>My groups
+    <a href="" class="btn btn-primary pull-right" ng-click="openHubModal()">Create a new group</a>
+</h2>
+
+<section class="widget">
+    <form role="form">
+        <div class="form-group">
+            <label for="grpName">Group name</label>
+            <input type="text" class="form-control" id="grpName">
+        </div>
+        <div class="form-group">
+            <label for="grpDescr">Group description</label>
+            <textarea class="form-control" id="grpDescr"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="privacy">Group Privacy</label>
+            <select id="privacy">
+                <option>Open</option>
+                <option>Closed</option>
+                <option>Invite only</option>
+            </select>
+        </div>
+        <input type="button" ng-click="createGroup()" value="Create" class="btn btn-primary">
+    </form>
+
+</section>
+
+<section class="widget" ng-repeat="grp in groups">
+    <h3>{{grp.name}}</h3>
+    <p>{{grp.description}}</p>
+
+    <a href="" ng-click="leaveGroup(grp)" class="btn btn-primary">Leave group</a>
+</section>
+
+
+<h2>Public groups</h2>
+<section class="widget" ng-repeat="grp in groups">
+    <h3>{{grp.name}}</h3>
+    <p>{{grp.description}}</p>
+
+    <a href="" class="btn btn-primary">Join group</a>
+</section>

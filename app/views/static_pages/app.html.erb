@@ -49,9 +49,9 @@
     <ul class="sidebar-nav">
       <li><a href="#/"><i class="fa fa-fw fa-lg fa-home"></i> <span>Dashboard</span></a></li>
       <li><a href="#/movies"><i class="fa fa-fw fa-lg fa-film"></i> <span>Movies</span></a></li>
-      <li><a href="#/settings"><i class="fa fa-fw fa-lg fa-group"></i> <span>Groups</span></a>
+      <li><a href="#/hubs"><i class="fa fa-fw fa-lg fa-group"></i> <span>Hubs</span></a>
         <ul>
-          <li ng-repeat="grp in groups"><a ng-href="#/groups/{{slug(grp.name)}}">{{grp.name}} <span class="badge pull-right" ng-if="grp.notifications > 0">{{grp.notifications}}</span></a></li>
+          <li ng-repeat="hub in groups"><a ng-href="#/hubs/{{slug(hub.name)}}">{{hub.name}} <span class="badge pull-right" ng-if="hub.notifications > 0">{{hub.notifications}}</span></a></li>
         </ul>
       </li>
       <li><a href="" ng-click="popup('todo')"><i class="fa fa-fw fa-lg fa-eye"></i> <span>Watchlist</span></a></li>
