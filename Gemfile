@@ -32,7 +32,9 @@ gem 'jbuilder', '~> 1.2'
 
 # OAuth
 gem 'omniauth'
-gem 'omniauth-facebook'
+gem 'omniauth-facebook', '1.4.0'
+
+gem 'httpauth', '~> 0.2.1'
 
 group :production do
   gem 'pg'
