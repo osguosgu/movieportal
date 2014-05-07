@@ -1,4 +1,4 @@
-MDbControllers.controller('MainCtrl', ['$scope', 'growl', function($scope, growl) {
+MDbControllers.controller('MainCtrl', ['$scope', 'growl', 'Hubs', function($scope, growl, Hubs) {
     $scope.user = "Burger King";
     $scope.sidebar = false;
     $scope.search = null;
@@ -17,6 +17,8 @@ MDbControllers.controller('MainCtrl', ['$scope', 'growl', function($scope, growl
             notifications: 0
         }
     ];
+
+    $scope.groups = Hubs.query();
 
     $scope.slug = function(str) {
         str = str.replace(/^\s+|\s+$/g, ''); // trim

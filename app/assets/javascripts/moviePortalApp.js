@@ -2,6 +2,7 @@
 var mdb = angular.module('mdb', [
   'angularMoment',
   'ngRoute',
+  'ngResource',
   'ngAnimate',
   'ngAnimate-animate.css',
   'ngTouch',
@@ -36,6 +37,11 @@ mdb.config(['$routeProvider',
 mdb.config(['growlProvider', function(growlProvider) {
     growlProvider.globalTimeToLive(2500);
     growlProvider.onlyUniqueMessages(false);
+}]);
+
+mdb.config(['$httpProvider', function($httpProvider) {
+    var authToken = $("meta[name=\"csrf-token\"]").attr("content");
+    $httpProvider.defaults.headers.common["X-CSRF-TOKEN"] = authToken;
 }]);
 
 var MDbControllers = angular.module('MDbControllers', []);

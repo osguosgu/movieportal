@@ -1,7 +1,12 @@
 
 <h2>{{group.name}}</h2>
 <section class="widget">
-nothing to see here. {{groupid}}
+Description: {{group.description}}
 
-name: {{group.name}}
+Users in the group:
+
+
+<ul ng-repeat="user in group.users">
+    <li><a href="/user/{{user.id}}">a {{user.name}}</a></li>
+</ul>
 </section>

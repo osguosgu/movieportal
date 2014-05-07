@@ -1,6 +1,6 @@
 Movieportal::Application.routes.draw do
 
-  resources :hubs, :movies
+  resources :hubs, :movies, :users
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
