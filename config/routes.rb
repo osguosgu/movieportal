@@ -5,13 +5,17 @@ Movieportal::Application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
-  # You can have the root of your site routed with "root"
-  root 'static_pages#index'
-  get 'app' => 'static_pages#app'
-
   get 'auth/:provider/callback' => 'sessions#create'
   get 'auth/failure' => redirect('/')
-  get 'signout' => 'sessions#destroy', as: 'signout' 
+  get 'signout' => 'sessions#destroy', as: 'signout'
+
+# Logged in
+  constraints lambda { |req| !req.session[:user_id].blank? } do
+    root :to => "static_pages#app", :as => "dashboard"
+  end
+
+# Not logged in
+  root :to => "static_pages#index"
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

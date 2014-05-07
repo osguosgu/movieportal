@@ -22,3 +22,15 @@ mdb.factory("Hubs", function ($resource) {
         }
     );
 });
+
+mdb.service('sessionService', [
+    '$window', function($window) {
+        var factory;
+        factory = {
+            current_user: function() {
+                return $window.gon.current_user;
+            }
+        };
+        return factory;
+    }
+]);

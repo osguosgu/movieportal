@@ -193,18 +193,6 @@ http://www.flickr.com/photos/arekev/3936196799/sizes/l/
 <div class="signup">
 <h2>Get Started</h2>
 <a href="/auth/facebook" class="fb-login">Log in using Facebook</a>
-<a href="/app" class="g-login">Log in using Google</a>
-</div>
-
-
-
-<div id="user_nav">
-  <% if current_user %>
-    Signed in as <strong><%= current_user.name %></strong>!
-    <%= link_to "Sign out", signout_path, id: "sign_out" %>
-  <% else %>
-    <%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" %>
-  <% end %>
 </div>
 
 <div class="readmore">
