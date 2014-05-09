@@ -32,6 +32,8 @@
 }
 .topbar-title img {
     margin-right: 10px;
+    width: 35px;
+    height: 35px;
 }
 
 #sidebar-wrapper {

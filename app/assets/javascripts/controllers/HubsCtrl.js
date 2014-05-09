@@ -4,36 +4,36 @@ MDbControllers.controller('HubsCtrl', ['$scope', '$routeParams', '$modal', 'Hubs
     $scope.hubDescr = "";
     $scope.hubPrivacy = "PUBLIC";
 
-    $scope.getGroup = function() {
-        return _.find($scope.groups, function(group) {
-            return this == $scope.slug(group.name);
+    $scope.getHub = function() {
+        return _.find($scope.hubs, function(hub) {
+            return this == $scope.slug(hub.name);
         }, $routeParams.groupid);
     };
 
-    $scope.leaveGroup = function(grp) {
-        Hubs.delete({}, {'Id': grp.id}, function(r) {
+    $scope.deleteHub = function(hub) {
+        Hubs.delete({}, {'Id': hub.id}, function(r) {
             console.log(r);
-            $scope.$parent.groups = _.without($scope.$parent.groups, grp);
-            growl.addSuccessMessage("You have left the group " + grp.name);
+            $scope.$parent.hubs = _.without($scope.$parent.hubs, hub);
+            growl.addSuccessMessage("You have deleted the hub " + hub.name);
         });
     };
 
-    $scope.createGroup = function() {
-        var grp = {
+    $scope.createHub = function() {
+        var hub = {
             "name": $scope.hubName,
             "description": $scope.hubDescr
         };
-        Hubs.save({}, grp, function(r) {
+        Hubs.save({}, hub, function(r) {
             console.log(r);
-            $scope.$parent.groups.push(grp);
-            growl.addSuccessMessage("Successfully created the new group " + grp.name);
+            $scope.$parent.hubs.push(hub);
+            growl.addSuccessMessage("Successfully created the new hub " + hub.name);
         });
     };
 
     $scope.openHubModal = function () {
 
         var modalInstance = $modal.open({
-            templateUrl: '../layouts/create_group.html',
+            templateUrl: '../layouts/create_hub.html',
             controller: function ($scope, $modalInstance) {
 
                 $scope.ok = function () {
@@ -48,5 +48,5 @@ MDbControllers.controller('HubsCtrl', ['$scope', '$routeParams', '$modal', 'Hubs
 
     };
 
-    $scope.group = $scope.getGroup();
+    $scope.hub = $scope.getHub();
 }]);

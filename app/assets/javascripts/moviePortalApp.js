@@ -16,12 +16,12 @@ var mdb = angular.module('mdb', [
 mdb.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
-    when('/groups/:groupid', {
-      templateUrl: '../layouts/group_detail.html',
+    when('/hubs/:groupid', {
+      templateUrl: '../layouts/hub_detail.html',
       controller: 'HubsCtrl'
     }).
     when('/hubs', {
-            templateUrl: '../layouts/groups.html',
+            templateUrl: '../layouts/hubs.html',
             controller: 'HubsCtrl'
         }).
     when('/movies', {

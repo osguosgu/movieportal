@@ -11,6 +11,7 @@
   <%= stylesheet_link_tag    "application", media: "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+
 </head>
 
 <body ng-controller="MainCtrl">
@@ -36,7 +37,7 @@
         </a>
 
         <div class="col-xs-7">
-          <input class="form-control" type="search" placeholder="Search for movies, users or groups" ng-model="search" options="exampleOptions" datasets="exampleData" sfTypeahead>
+          <input class="form-control" type="search" placeholder="Search for movies, users or hubs" ng-model="search" options="exampleOptions" datasets="exampleData" sfTypeahead>
         </div>
       </div>
     </div>
@@ -44,14 +45,14 @@
   <!-- Sidebar -->
   <div id="sidebar-wrapper">
 
-    <div class="topbar-title"><img ng-src="http://lorempixel.com/30/30/people/" alt="" class="pull-left"> {{user}}</div>
+    <div class="topbar-title"><img src="<%= current_user.image %>" alt="" class="pull-left"> <%= current_user.name %></div>
 
     <ul class="sidebar-nav">
       <li><a href="#/"><i class="fa fa-fw fa-lg fa-home"></i> <span>Dashboard</span></a></li>
       <li><a href="#/movies"><i class="fa fa-fw fa-lg fa-film"></i> <span>Movies</span></a></li>
       <li><a href="#/hubs"><i class="fa fa-fw fa-lg fa-group"></i> <span>Hubs</span></a>
         <ul>
-          <li ng-repeat="hub in groups"><a ng-href="#/hubs/{{slug(hub.name)}}">{{hub.name}} <span class="badge pull-right" ng-if="hub.notifications > 0">{{hub.notifications}}</span></a></li>
+          <li ng-repeat="hub in hubs"><a ng-href="#/hubs/{{slug(hub.name)}}">{{hub.name}} <span class="badge pull-right" ng-if="hub.notifications > 0">{{hub.notifications}}</span></a></li>
         </ul>
       </li>
       <li><a href="" ng-click="popup('todo')"><i class="fa fa-fw fa-lg fa-eye"></i> <span>Watchlist</span></a></li>

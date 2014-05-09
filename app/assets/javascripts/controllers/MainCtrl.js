@@ -3,22 +3,7 @@ MDbControllers.controller('MainCtrl', ['$scope', 'growl', 'Hubs', function($scop
     $scope.sidebar = false;
     $scope.search = null;
 
-    $scope.groups = [
-        {
-            name: "tlt-allstars",
-            notifications: 0
-        },
-        {
-            name: "urpot",
-            notifications: 3
-        },
-        {
-            name: "diudiu",
-            notifications: 0
-        }
-    ];
-
-    $scope.groups = Hubs.query();
+    $scope.hubs = Hubs.query();
 
     $scope.slug = function(str) {
         str = str.replace(/^\s+|\s+$/g, ''); // trim

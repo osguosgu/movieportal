@@ -1,12 +1,12 @@
 
-<h2>{{group.name}}</h2>
+<h2>{{hub.name}}</h2>
 <section class="widget">
-Description: {{group.description}}
+Description: {{hub.description}}
 
 Users in the group:
 
 
-<ul ng-repeat="user in group.users">
+<ul ng-repeat="user in hub.users">
     <li><a href="/user/{{user.id}}">a {{user.name}}</a></li>
 </ul>
 </section>

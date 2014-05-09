@@ -1,0 +1,45 @@
+
+
+<h2>My hubs
+    <a href="" class="btn btn-primary pull-right" ng-click="openHubModal()">Create a new hub</a>
+</h2>
+
+<section class="widget">
+    <form role="form">
+        <div class="form-group">
+            <label for="hubName">Hub name</label>
+            <input type="text" class="form-control" id="hubName" ng-model="hubName">
+        </div>
+        <div class="form-group">
+            <label for="hubName">Hub description</label>
+            <textarea class="form-control" id="hubDescr" ng-model="hubDescr"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="privacy">Hub Privacy</label>
+            <select id="privacy">
+                <option>Open</option>
+                <option>Closed</option>
+                <option>Invite only</option>
+            </select>
+        </div>
+        <input type="button" ng-click="createHub()" value="Create" class="btn btn-primary">
+    </form>
+</section>
+
+<section class="widget" ng-repeat="hub in myHubs = (hubs | filter: hub.memberOf)">
+    <h3>{{hub.name}}</h3>
+    <p>{{hub.description}}</p>
+
+    <a href="" ng-click="deleteHub(hub)" class="btn btn-primary">Delete hub</a>
+</section>
+<section class="widget widget-alert" ng-if="myHubs.length==0" class="error">You're not in any hubs.</section>
+
+
+<h2>Public hubs</h2>
+<section class="widget" ng-repeat="hub in hubs">
+    <h3>{{hub.name}}</h3>
+    <p>{{hub.description}}</p>
+
+    <a href="" class="btn btn-primary">Join hub</a>
+</section>
+<section class="widget widget-alert" ng-if="hubs.length==0" class="error">No public hubs to show.</section>
