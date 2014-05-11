@@ -1,7 +1,7 @@
 // used modules
 var mdb = angular.module('mdb', [
   'angularMoment',
-  'ngRoute',
+  'ui.router',
   'ngResource',
   'ngAnimate',
   'ngAnimate-animate.css',
@@ -13,29 +13,52 @@ var mdb = angular.module('mdb', [
   ]);
 
 // routes
-mdb.config(['$routeProvider',
-  function($routeProvider) {
-    $routeProvider.
-    when('/hubs/:id', {
-      templateUrl: '../layouts/hub_detail.html',
-      controller: 'HubsCtrl'
-    }).
-    when('/hubs', {
+mdb.config(function($stateProvider, $urlRouterProvider) {
+
+    // For any unmatched url, redirect to home
+    $urlRouterProvider.otherwise("/");
+
+    // Now set up the states
+    $stateProvider
+        .state('home', {
+            url: "/",
+            templateUrl: "../layouts/home.html",
+            controller: 'HomeCtrl'
+        })
+        .state('hubs', {
+            url: '/hubs',
             templateUrl: '../layouts/hubs.html',
             controller: 'HubsCtrl'
-        }).
-    when('/movies', {
-      templateUrl: '../layouts/movies.html',
-      controller: 'MoviesCtrl'
-    }).
-    when('/', {
-        templateUrl: '../layouts/home.html',
-        controller: 'HomeCtrl'
-    }).
-    otherwise({
-      redirectTo: '/'
-    });
-  }]);
+        })
+        .state('hubs.create', {
+            url: '/new',
+            onEnter: function($stateParams, $state, $modal) {
+                $modal.open({
+                    templateUrl: '../layouts/create_hub.html',
+                    controller: 'HubsCtrl'
+                }).result.then(function(result) {
+                        return $state.transitionTo("hubs");
+                }, function(result) {
+                        return $state.transitionTo("hubs");
+                    });
+            }
+        })
+        .state('hub_detail', {
+            url: '/hubs/:id',
+            controller: 'HubsCtrl',
+            templateUrl: '../layouts/hub_detail.html'
+        })
+        .state('movies', {
+            url: "/movies",
+            templateUrl: "../layouts/movies.html",
+            controller: 'MoviesCtrl'
+        })
+        .state('movies.review', {
+            url: "/review",
+            templateUrl: "../layouts/movie_review.html"
+        })
+});
+
 
 // notification popup config
 mdb.config(['growlProvider', function(growlProvider) {

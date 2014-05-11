@@ -10,7 +10,7 @@
 <h4>Users in the group:</h4>
 <ul ng-repeat="user in hub.users" class="hub-users">
     <li>
-        <img src="{{user.image}}">
+        <img ng-src="{{user.image}}">
         <a href="/user/{{user.id}}">{{user.name}}</a>
         <span ng-if="user.is_admin" class="badge">admin</span>
     </li>

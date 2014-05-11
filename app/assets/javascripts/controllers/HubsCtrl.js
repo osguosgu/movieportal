@@ -1,19 +1,15 @@
-MDbControllers.controller('HubsCtrl', ['$scope', '$routeParams', '$modal', 'Hubs', 'growl', function ($scope, $routeParams, $modal, Hubs, growl) {
-
-    $scope.hubName = "";
-    $scope.hubDescr = "";
-    $scope.hubPrivacy = 0;
+MDbControllers.controller('HubsCtrl', ['$scope', '$rootScope', '$stateParams', '$modal', 'Hubs', 'growl', function ($scope, $rootScope, $stateParams, $modal, Hubs, growl) {
 
     $scope.findHub = function() {
-        return _.find($scope.hubs, function(hub) {
+        return _.find($rootScope.hubs, function(hub) {
             return this == $scope.slug(hub.name);
-        }, $routeParams.slug);
+        }, $stateParams.slug);
     };
 
     $scope.deleteHub = function(hub) {
         Hubs.delete({}, {'Id': hub.id}, function(r) {
             console.log(r);
-            $scope.$parent.hubs = _.without($scope.$parent.hubs, hub);
+            $rootScope.hubs = _.without($rootScope.hubs, hub);
             growl.addSuccessMessage("You have deleted the hub " + hub.name);
         });
     };
@@ -26,12 +22,11 @@ MDbControllers.controller('HubsCtrl', ['$scope', '$routeParams', '$modal', 'Hubs
         };
         Hubs.save({}, hub, function(createdHub) {
             console.log(createdHub);
-            $scope.$parent.hubs.push(createdHub);
+            $rootScope.hubs.push(createdHub);
             growl.addSuccessMessage("Successfully created the new hub " + createdHub.name);
         }, function (e) {
             growl.addErrorMessage("Unable to create the hub, please check your input!");
         });
-        $scope.hubName = $scope.hubDescr = "";
     };
 
     $scope.openHubModal = function () {
@@ -64,5 +59,30 @@ MDbControllers.controller('HubsCtrl', ['$scope', '$routeParams', '$modal', 'Hubs
         }
     }
 
-    $scope.hub = Hubs.get({'Id': $routeParams.id});
+    $scope.hub = { name: '', description: '', privacy: 0 };
+
+    if (!isNaN($stateParams.id))
+        $scope.hub = Hubs.get({'Id': $stateParams.id});
+
+
+    $scope.dismiss = function() {
+        //$scope.$dismiss();
+        $scope.$close(true);
+    };
+
+        //$scope.test = function() { return $scope.hubName + " - " + $scope.hubDescr }
+
+    $scope.save = function() {
+
+        //console.log("save: " + $scope.hubName);
+
+        Hubs.save({}, $scope.hub, function(createdHub) {
+            console.log(createdHub);
+            $rootScope.hubs.push(createdHub);
+            growl.addSuccessMessage("Successfully created the new hub " + createdHub.name);
+            $scope.$close(true);
+        }, function (e) {
+            growl.addErrorMessage("Unable to create the hub, please check your input!");
+        });
+    }
 }]);

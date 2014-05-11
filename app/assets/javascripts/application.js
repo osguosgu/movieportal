@@ -15,7 +15,7 @@
 //= require jquery_ujs
 //= require moment-with-langs.min
 //= require angular
-//= require angular-route
+//= require angular-ui-router.min
 //= require angular-resource
 //= require angular-animate
 //= require angular-touch
