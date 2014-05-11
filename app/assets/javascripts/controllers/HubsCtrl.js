@@ -2,12 +2,12 @@ MDbControllers.controller('HubsCtrl', ['$scope', '$routeParams', '$modal', 'Hubs
 
     $scope.hubName = "";
     $scope.hubDescr = "";
-    $scope.hubPrivacy = "PUBLIC";
+    $scope.hubPrivacy = 0;
 
-    $scope.getHub = function() {
+    $scope.findHub = function() {
         return _.find($scope.hubs, function(hub) {
             return this == $scope.slug(hub.name);
-        }, $routeParams.groupid);
+        }, $routeParams.slug);
     };
 
     $scope.deleteHub = function(hub) {
@@ -21,13 +21,17 @@ MDbControllers.controller('HubsCtrl', ['$scope', '$routeParams', '$modal', 'Hubs
     $scope.createHub = function() {
         var hub = {
             "name": $scope.hubName,
-            "description": $scope.hubDescr
+            "description": $scope.hubDescr,
+            "privacy": $scope.hubPrivacy
         };
-        Hubs.save({}, hub, function(r) {
-            console.log(r);
-            $scope.$parent.hubs.push(hub);
-            growl.addSuccessMessage("Successfully created the new hub " + hub.name);
+        Hubs.save({}, hub, function(createdHub) {
+            console.log(createdHub);
+            $scope.$parent.hubs.push(createdHub);
+            growl.addSuccessMessage("Successfully created the new hub " + createdHub.name);
+        }, function (e) {
+            growl.addErrorMessage("Unable to create the hub, please check your input!");
         });
+        $scope.hubName = $scope.hubDescr = "";
     };
 
     $scope.openHubModal = function () {
@@ -48,5 +52,17 @@ MDbControllers.controller('HubsCtrl', ['$scope', '$routeParams', '$modal', 'Hubs
 
     };
 
-    $scope.hub = $scope.getHub();
+    $scope.showPrivacy = function(privacy) {
+        switch (privacy) {
+            case 2:
+                return "Invite only";
+            case 1:
+                return "Closed";
+            default:
+                return "Open";
+
+        }
+    }
+
+    $scope.hub = Hubs.get({'Id': $routeParams.id});
 }]);

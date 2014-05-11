@@ -16,7 +16,7 @@ var mdb = angular.module('mdb', [
 mdb.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
-    when('/hubs/:groupid', {
+    when('/hubs/:id', {
       templateUrl: '../layouts/hub_detail.html',
       controller: 'HubsCtrl'
     }).

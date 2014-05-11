@@ -1,12 +1,18 @@
 
 <h2>{{hub.name}}</h2>
 <section class="widget">
-Description: {{hub.description}}
 
-Users in the group:
+{{showPrivacy(hub.privacy)}}
 
+<h4>Description:</h4>
+{{hub.description}}
 
-<ul ng-repeat="user in hub.users">
-    <li><a href="/user/{{user.id}}">a {{user.name}}</a></li>
+<h4>Users in the group:</h4>
+<ul ng-repeat="user in hub.users" class="hub-users">
+    <li>
+        <img src="{{user.image}}">
+        <a href="/user/{{user.id}}">{{user.name}}</a>
+        <span ng-if="user.is_admin" class="badge">admin</span>
+    </li>
 </ul>
 </section>

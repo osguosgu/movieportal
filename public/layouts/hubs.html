@@ -1,6 +1,6 @@
 
 
-<h2>My hubs
+<h2>Create a new hub
     <a href="" class="btn btn-primary pull-right" ng-click="openHubModal()">Create a new hub</a>
 </h2>
 
@@ -15,29 +15,33 @@
             <textarea class="form-control" id="hubDescr" ng-model="hubDescr"></textarea>
         </div>
         <div class="form-group">
-            <label for="privacy">Hub Privacy</label>
-            <select id="privacy">
-                <option>Open</option>
-                <option>Closed</option>
-                <option>Invite only</option>
+            <label for="privacy">Hub privacy</label>
+            <select id="privacy" ng-model="hubPrivacy">
+                <option value="0">Open</option>
+                <option value="1">Closed</option>
+                <option value="2">Invite only</option>
             </select>
         </div>
         <input type="button" ng-click="createHub()" value="Create" class="btn btn-primary">
     </form>
 </section>
 
+<h2>My hubs</h2>
 <section class="widget" ng-repeat="hub in myHubs = (hubs | filter: hub.memberOf)">
-    <h3>{{hub.name}}</h3>
+    <h3>{{hub.name}} <span class="badge">{{showPrivacy(hub.privacy)}}</span></h3>
     <p>{{hub.description}}</p>
 
-    <a href="" ng-click="deleteHub(hub)" class="btn btn-primary">Delete hub</a>
+    <a ng-if="hub.is_admin" href="" ng-click="deleteHub(hub)" class="btn btn-primary">Delete hub</a>
+    <a ng-if="hub.is_member" href="" ng-click="leaveHub(hub)" class="btn btn-primary">Leave hub</a>
+    <a ng-if="!hub.is_member && hub.privacy==1" href="" ng-click="joinHub(hub)" class="btn btn-primary">Request to join hub</a>
+    <a ng-if="!hub.is_member && hub.privacy==0" href="" ng-click="joinHub(hub)" class="btn btn-primary">Join hub</a>
 </section>
 <section class="widget widget-alert" ng-if="myHubs.length==0" class="error">You're not in any hubs.</section>
 
 
 <h2>Public hubs</h2>
-<section class="widget" ng-repeat="hub in hubs">
-    <h3>{{hub.name}}</h3>
+<section class="widget" ng-repeat="hub in hubs | filter: hub.privacy < 2">
+    <h3>{{hub.name}} <span class="badge">{{showPrivacy(hub.privacy)}}</span></h3>
     <p>{{hub.description}}</p>
 
     <a href="" class="btn btn-primary">Join hub</a>

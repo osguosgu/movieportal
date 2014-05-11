@@ -3,8 +3,7 @@ class CreateHubs < ActiveRecord::Migration
     create_table :hubs do |t|
       t.string :name
       t.text :description
-      t.references :user, index: true
-
+      t.integer :privacy
       t.timestamps
     end
   end

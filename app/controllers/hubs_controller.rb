@@ -25,9 +25,15 @@ class HubsController < ApplicationController
   # POST /hubs.json
   def create
     @hub = Hub.new(hub_params)
+    if @hub.save
+      hubUser = HubUser.new(:user => current_user, :hub => @hub, :is_admin => true)
+      ok = hubUser.save
+    else
+      ok = false
+    end
 
     respond_to do |format|
-      if @hub.save
+      if ok
         format.html { redirect_to @hub, notice: 'Hub was successfully created.' }
         format.json { render action: 'show', status: :created, location: @hub }
       else
@@ -51,6 +57,20 @@ class HubsController < ApplicationController
     end
   end
 
+  def join
+    if @hub.privacy == Hub::PRIVACY_PUBLIC
+      @hub.users << current_user
+      render.json { @hub }
+    end
+
+    render.json { head :no_content }
+  end
+
+  def leave
+    @hub.users.destroy(current_user)
+    render.json { head :no_content }
+  end
+
   # DELETE /hubs/1
   # DELETE /hubs/1.json
   def destroy
@@ -64,11 +84,15 @@ class HubsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_hub
-      @hub = Hub.find(params[:id])
+      if params[:admins].blank?
+        @hub = Hub.find(params[:id])
+      else
+        @hub = Hub.find(params[:id])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def hub_params
-      params.require(:hub).permit(:name, :description, :user_id)
+      params.require(:hub).permit(:name, :description, :privacy, :user_id)
     end
 end

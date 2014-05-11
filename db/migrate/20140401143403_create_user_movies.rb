@@ -5,7 +5,9 @@ class CreateUserMovies < ActiveRecord::Migration
       t.text :review
       t.boolean :watchlist
       t.boolean :favourite
-      t.references :hub, polymorphic: true, index: true
+      t.references :user, index: true
+      t.references :movie, index: true
+      t.boolean :public, null: false, default: false
 
       t.timestamps
     end

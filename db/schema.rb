@@ -11,12 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140507102837) do
+ActiveRecord::Schema.define(version: 20140510170013) do
+
+  create_table "comments", force: true do |t|
+    t.text     "text"
+    t.integer  "user_id"
+    t.integer  "user_movie_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+  add_index "comments", ["user_movie_id"], name: "index_comments_on_user_movie_id"
+
+  create_table "genres", force: true do |t|
+    t.string "name"
+  end
 
   create_table "hub_users", force: true do |t|
     t.integer  "user_id"
     t.integer  "hub_id"
-    t.boolean  "is_admin"
+    t.boolean  "is_admin",   default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -27,39 +42,64 @@ ActiveRecord::Schema.define(version: 20140507102837) do
   create_table "hubs", force: true do |t|
     t.string   "name"
     t.text     "description"
-    t.integer  "user_id"
+    t.integer  "privacy"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "hubs", ["user_id"], name: "index_hubs_on_user_id"
+  create_table "hubs_movies", id: false, force: true do |t|
+    t.integer "hub_id"
+    t.integer "movie_id"
+  end
+
+  add_index "hubs_movies", ["hub_id", "movie_id"], name: "index_hubs_movies_on_hub_id_and_movie_id"
 
   create_table "movies", force: true do |t|
     t.string   "title"
     t.integer  "year"
+    t.string   "poster_image"
+    t.string   "backdrop_image"
     t.integer  "imdb_id"
     t.integer  "tmdb_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  create_table "movies_genres", id: false, force: true do |t|
+    t.integer "movie_id"
+    t.integer "genre_id"
+  end
+
+  add_index "movies_genres", ["movie_id", "genre_id"], name: "index_movies_genres_on_movie_id_and_genre_id"
+
   create_table "user_movies", force: true do |t|
     t.float    "rating"
     t.text     "review"
     t.boolean  "watchlist"
     t.boolean  "favourite"
-    t.integer  "hub_id"
-    t.string   "hub_type"
+    t.integer  "user_id"
+    t.integer  "movie_id"
+    t.boolean  "public",     default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "user_movies", ["hub_id", "hub_type"], name: "index_user_movies_on_hub_id_and_hub_type"
+  add_index "user_movies", ["movie_id"], name: "index_user_movies_on_movie_id"
+  add_index "user_movies", ["user_id"], name: "index_user_movies_on_user_id"
+
+  create_table "user_movies_hubs", id: false, force: true do |t|
+    t.integer "user_movie_id"
+    t.integer "hub_id"
+  end
+
+  add_index "user_movies_hubs", ["user_movie_id", "hub_id"], name: "index_user_movies_hubs_on_user_movie_id_and_hub_id"
 
   create_table "users", force: true do |t|
     t.string   "provider"
     t.string   "uid"
     t.string   "name"
+    t.string   "username"
+    t.string   "image"
     t.string   "oauth_token"
     t.datetime "oauth_expires_at"
     t.datetime "created_at"
