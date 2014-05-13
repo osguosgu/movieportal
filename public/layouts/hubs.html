@@ -5,8 +5,8 @@
     <h3>{{hub.name}} <span class="badge">{{showPrivacy(hub.privacy)}}</span></h3>
     <p>{{hub.description}}</p>
 
-    <a ng-if="hub.is_admin" href="" ng-click="deleteHub(hub)" class="btn btn-primary">Delete hub</a>
-    <a ng-if="hub.is_member" href="" ng-click="leaveHub(hub)" class="btn btn-primary">Leave hub</a>
+    <a ng-if="hub.is_admin == true" href="" ng-click="deleteHub(hub)" class="btn btn-primary">Delete hub</a>
+    <a ng-if="hub.is_member == true" href="" ng-click="leaveHub(hub)" class="btn btn-primary">Leave hub</a>
 </section>
 <section class="widget widget-alert" ng-if="myHubs.length==0" class="error">You're not in any hubs.</section>
 
@@ -16,8 +16,8 @@
     <h3>{{hub.name}} <span class="badge">{{showPrivacy(hub.privacy)}}</span></h3>
     <p>{{hub.description}}</p>
 
-    <a ng-if="!hub.is_member && hub.privacy==1" href="" ng-click="joinHub(hub)" class="btn btn-primary">Request to join hub</a>
-    <a ng-if="!hub.is_member && hub.privacy==0" href="" ng-click="joinHub(hub)" class="btn btn-primary">Join hub</a>
+    <a ng-if="hub.is_member == false && hub.privacy==1" href="" ng-click="joinHub(hub)" class="btn btn-primary">Request to join hub</a>
+    <a ng-if="hub.is_member == false && hub.privacy==0" href="" ng-click="joinHub(hub)" class="btn btn-primary">Join hub</a>
 
     <a href="" class="btn btn-primary">Join hub</a>
 </section>
