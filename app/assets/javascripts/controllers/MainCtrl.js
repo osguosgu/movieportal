@@ -1,9 +1,10 @@
-MDbControllers.controller('MainCtrl', ['$scope', '$rootScope', '$state', 'growl', 'Hubs', 'Search', function($scope, $rootScope, $state, growl, Hubs, Search) {
+MDbControllers.controller('MainCtrl', ['$scope', '$rootScope', '$state', 'growl', 'Hubs', 'Search', 'Users', function($scope, $rootScope, $state, growl, Hubs, Search, Users) {
     $scope.sidebar = false;
     $scope.search = "";
 
     $rootScope.hubs = Hubs.query();
-    $rootScope.popularMovies = Search.popularMovies();
+    //$rootScope.popularMovies = Search.popularMovies();
+    $rootScope.currentUser = Users.get({Id: "me"});
 
     $scope.slug = function(str) {
         str = str.replace(/^\s+|\s+$/g, ''); // trim

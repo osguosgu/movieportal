@@ -1,7 +1,17 @@
 // API Services
+mdb.factory("Users", function ($resource) {
+    return $resource(
+        "/users/:Id.json",
+        {Id: "@Id" },
+        {
+            "update": {method: "PUT"},
+        }
+    );
+});
+
 mdb.factory("Movies", function ($resource) {
     return $resource(
-        "/movies/:Id",
+        "/movies/:Id.json",
         {Id: "@Id" },
         {
             "update": {method: "PUT"},
