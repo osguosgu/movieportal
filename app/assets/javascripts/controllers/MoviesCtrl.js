@@ -1,4 +1,4 @@
-MDbControllers.controller('MoviesCtrl', function ($scope) {
+MDbControllers.controller('MoviesCtrl', function ($scope, Movies, Search, $http) {
 
     $scope.displayMode = 0;
     $scope.movieSort = "date";
@@ -10,6 +10,15 @@ MDbControllers.controller('MoviesCtrl', function ($scope) {
     $scope.yearStart = 0;
     $scope.yearEnd = 0;
     $scope.comment = new Array();
+
+    $scope.rate = 7;
+    $scope.max = 10;
+    $scope.isReadonly = false;
+
+    $scope.hoveringOver = function(value) {
+        $scope.overStar = value;
+        $scope.percent = 100 * (value / $scope.max);
+    };
 
     $scope.sortBy = function(predicate){
         console.log("sort by: " + predicate);
@@ -77,4 +86,51 @@ MDbControllers.controller('MoviesCtrl', function ($scope) {
             return _.findWhere($scope.genreFilters, { selected: true, name: gn}) !== undefined;
         });
     };
+
+    // Adding a new review
+    $scope.review = { movie: '', text: '', rating: 0, favourite: false };
+
+    $scope.dismiss = function() {
+        //$scope.$dismiss();
+        $scope.$close(true);
+    };
+
+    $scope.fetch = function() {
+        $scope.review.suggestions = Search.movies({query: $scope.review.movie, limit: 5});
+    }
+
+    $scope.save = function() {
+
+        console.log($scope.review);
+       /*
+        Hubs.save({}, $scope.hub, function(createdHub) {
+            console.log(createdHub);
+            $rootScope.hubs.push(createdHub);
+            growl.addSuccessMessage("Successfully created the new hub " + createdHub.name);
+            $scope.$close(true);
+        }, function (e) {
+            growl.addErrorMessage("Unable to create the hub, please check your input!");
+        });
+        */
+    } ;
+    $scope.selected = undefined;
+
+    // Any function returning a promise object can be used to load values asynchronously
+    $scope.autoComplete = function(val) {
+        return $http.get('/search.json', {
+            params: {
+                query: val,
+                type: 'all'
+            }
+        }).then(function(res){
+                var results = [];
+                angular.forEach(res.data, function(item){
+                    results.push(item);
+                    //console.log(item.title);
+                });
+                console.log(results);
+                return results;
+            });
+    };
+
 });

@@ -19,6 +19,50 @@ body {
   background: url(<%= asset_path 'green.jpg' %>) no-repeat fixed;
   background-size: cover;
 }
+.movie-add img, .movie-add .placeholder {
+    width: 102px;
+    height: 148px;
+}
+.movie-add .placeholder { margin: 0 auto; }
+.movie-add .placeholder:before {
+    content: "\f008";
+    font-family: 'fontawesome';
+    color: #eee;
+    line-height: 135px;
+    font-size: 80px;
+    padding-left: 3px;
+}
+.movie-add textarea {
+    height: 148px;
+}
+
+.movie-review .dropdown-menu > li > a {
+    padding: 3px 20px 3px 3px;
+    line-height: 60px;
+}
+.movie-review .dropdown-menu img {
+    height: 60px;
+    margin-right: 10px;
+}
+
+
+.movie-title {
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+    font-size: 18px !important;
+    font-weight: 500 !important;
+    line-height: 1.1 !important;
+    border: 0 !important;
+    border-bottom: #ccc 1px solid !important;
+    padding-right: 42.5px !important;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.movie-title:focus {
+    outline: none;
+    border-bottom: #1E9C89 1px solid !important;
+}
 
 a {
   color: #3c8c48;

@@ -26,6 +26,9 @@ gem 'jquery-rails'
 gem 'gon'
 gem 'rabl-rails'
 
+#https://github.com/andrielfn/tmdb-api
+gem 'pry'
+gem  'tmdb-api'
 gem 'themoviedb'
 
 # Turbolinks makes following links in your web application faster. 

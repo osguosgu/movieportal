@@ -54,8 +54,17 @@ mdb.config(function($stateProvider, $urlRouterProvider) {
             controller: 'MoviesCtrl'
         })
         .state('movies.review', {
-            url: "/review",
-            templateUrl: "../layouts/movie_review.html"
+            url: '/review',
+            onEnter: function($stateParams, $state, $modal) {
+                $modal.open({
+                    templateUrl: '../layouts/create_review.html',
+                    controller: 'MoviesCtrl'
+                }).result.then(function(result) {
+                        return $state.transitionTo("movies");
+                    }, function(result) {
+                        return $state.transitionTo("movies");
+                    });
+            }
         })
 });
 

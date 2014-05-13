@@ -1,0 +1,65 @@
+<div class="modal-header">
+    <h3 class="modal-title">Create a new review</h3>
+</div>
+<div class="modal-body movie-review">
+
+    <form role="form">
+
+        <!--<pre>Model: {{review.movie | json}}</pre>-->
+
+        <script id="template/typeahead/typeahead-match.html" type="text/ng-template">
+            <a tabindex="-1" class="clearfix movie-typeahead">
+                <img ng-src="{{match.model.poster}}" class="pull-left">
+                <span bind-html-unsafe="match.label | typeaheadHighlight:query"></span> ({{match.model.release_date  | limitTo: 4}})
+            </a>
+        </script>
+        <script id="template/rating/rating.html" type="text/ng-template">
+            <span ng-mouseleave="reset()" ng-keydown="onKeydown($event)" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="{{range.length}}" aria-valuenow="{{value}}">
+                    <i ng-repeat="r in range track by $index" ng-mouseenter="enter($index + 1)" ng-click="rate($index + 1)" class="fa fa-fw" ng-class="$index < value && (r.stateOn || 'fa-star') || (r.stateOff || 'fa-star-o')">
+                    <span class="sr-only">({{ $index < value ? '*' : ' ' }})</span>
+                    </i>
+            </span>
+        </script>
+
+
+        <input type="text" ng-model="review.movie" placeholder="Movie title"
+               typeahead="movie as movie.title for movie in autoComplete($viewValue) | limitTo: 6"
+               typeahead-min-length="3" typeahead-wait-ms="300" typeahead-editable="false"
+               typeahead-loading="loadingMovies" class="movie-title">
+        <i ng-show="loadingMovies" class="fa fa-spinner fa-spin form-control-feedback"></i>
+
+        <div class="movie-add row">
+        <div class="col-md-3">
+            <img ng-show="review.movie" ng-src="{{review.movie.poster}}" class="img-thumbnail" style="margin-right:10px;margin-bottom:10px">
+            <div class="img-thumbnail pull-left placeholder" ng-hide="review.movie"></div>
+        </div>
+        <div class="has-feedback col-md-9">
+
+            <div class="form-group">
+                <label for="hubName" class="sr-only">Review text</label>
+                <textarea placeholder="Write your review..." class="form-control" id="hubDescr" ng-model="review.text"></textarea>
+            </div>
+        </div>
+        </div>
+
+        <div ng-if="review.movie"><b>Release date:</b> {{review.movie.release_date}}</div>
+        <div ng-if="review.movie"><b>TMDb average:</b> {{review.movie.vote_average}} from {{review.movie.vote_count}} votes</div>
+
+        <div class="form-group">
+            <label for="hubName">Rating {{rating}}</label>
+            <rating ng-model="rating" max="10" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating>
+            <span class="label" ng-class="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}" ng-show="overStar && !isReadonly">{{percent}}%</span>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="review.favourite">
+                Add to favourites
+            </label>
+        </div>
+    </form>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="save()">Ok</button>
+    <button class="btn btn-warning" ng-click="dismiss()">Cancel</button>
+</div>
