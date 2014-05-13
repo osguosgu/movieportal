@@ -66,6 +66,11 @@ mdb.config(function($stateProvider, $urlRouterProvider) {
                     });
             }
         })
+        .state('profile', {
+            url: "/profile",
+            templateUrl: "../layouts/profile.html",
+            controller: 'ProfileCtrl'
+        })
 });
 
 
