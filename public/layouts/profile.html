@@ -3,10 +3,11 @@
  	<div class="profile-widget">
  		<div>
 	 		<div class="profile-photo">
-	 			<img src="http://graph.facebook.com/{{currentUser.uid}}/picture?type=large">
+	 			<img ng-src="http://graph.facebook.com/{{user.uid}}/picture?type=large">
 	 		</div>
 	 		<div class="profile-info">
-	 			<h3> {{currentUser.name}}</h3>
+	 			<h3>{{user.name}}</h3>
+                <p>Joined {{user.created_at | amCalendar}}</p>
 	 		</div>
 	 		<div class="clearing"> </div>
 	 	</div>

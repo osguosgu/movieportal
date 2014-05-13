@@ -11,7 +11,7 @@
 <ul ng-repeat="user in hub.users" class="hub-users">
     <li>
         <img ng-src="{{user.image}}">
-        <a href="/user/{{user.id}}">{{user.name}}</a>
+        <a ui-sref="{{user.id==currentUser.id ? 'own_profile' : 'user_profile({id: user.id})'}}">{{user.name}}</a>
         <span ng-if="user.is_admin" class="badge">admin</span>
     </li>
 </ul>

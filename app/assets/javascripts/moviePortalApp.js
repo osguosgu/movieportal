@@ -66,10 +66,15 @@ mdb.config(function($stateProvider, $urlRouterProvider) {
                     });
             }
         })
-        .state('profile', {
+        .state('own_profile', {
             url: "/profile",
             templateUrl: "../layouts/profile.html",
-            controller: 'ProfileCtrl'
+            controller: 'UsersCtrl'
+        })
+        .state('user_profile', {
+            url: '/users/:id',
+            controller: 'UsersCtrl',
+            templateUrl: '../layouts/profile.html'
         })
 });
 
