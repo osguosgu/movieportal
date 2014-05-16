@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-  <title>Movie Portal</title>
+  <title>MovieHub</title>
   <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
 
   <%= stylesheet_link_tag    "application", media: "all" %>
@@ -72,47 +72,6 @@
   </div>
 
 </div>
-
-<!-- modal //todo move to template -->
-<div ng-controller="MovieDetailCtrl" class="modal fade movieModal" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-
-        <h3>{{movie.title}} ({{movie.year}})
-          <ul class="icon-menu pull-right">
-            <li><a href="" ng-click="toggleWatchlist(movie)" ng-class="{active: movie.watchlist}"><i class="fa fa-fw fa-eye"></i></a></li>
-            <li><a href=""><i class="fa fa-fw fa-comment"></i></a></li>
-            <li><a href="" ng-click="remove(movie)"><i class=" fa fa-fw fa-times"></i></a></li>
-          </ul>
-        </h3>
-      </div>
-      <div class="modal-body">
-        <img class="media-object pull-left" alt="" ng-src="{{movie.img}}">
-
-        <div class="media-body movie">
-          <ul class="details">
-            <li><strong><a href="#">IMDb:</a></strong> {{movie.rating}} from {{movie.votes}} users</li>
-            <li><strong>Ratings:</strong> Average 8.3 | IMDb 7.3 | Me 6.5</li>
-            <li><strong>Director:</strong> {{movie.director}}</li>
-            <li class="genres" ng-if="item.genres">
-              <span ng-repeat="genre in movie.genres">{{genre}}</span>
-            </li>
-          </ul>
-          <div class="plot">
-            {{movie.plot}}
-          </div>
-        </div>
-        <ul class="comments clearfix" ng-if="movie.comments.length>0">
-          <li ng-repeat="c in movie.comments | orderBy:date:true | limitTo:4">
-            <span class="author">{{c.user}}:</span> {{c.comment}}
-            <span class="time-ago" am-time-ago="c.date"></span></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-
 
 <!-- notification container -->
 <div growl></div>

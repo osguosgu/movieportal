@@ -1,4 +1,4 @@
 class Comment < ActiveRecord::Base
   belongs_to :user
-  belongs_to :user_movie
+  belongs_to :review
 end

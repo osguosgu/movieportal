@@ -21,6 +21,18 @@ mdb.factory("Movies", function ($resource) {
     );
 });
 
+mdb.factory("Reviews", function ($resource) {
+    return $resource(
+        "/reviews/:Id.json",
+        {Id: "@Id" },
+        {
+            "update": {method: "PUT"},
+            //"reviews": {'method': 'GET', 'params': {'reviews_only': "true"}, isArray: true}
+
+        }
+    );
+});
+
 mdb.factory("Search", function ($resource) {
     return $resource(
         "/search.json",
@@ -46,15 +58,3 @@ mdb.factory("Hubs", function ($resource) {
         }
     );
 });
-
-mdb.service('sessionService', [
-    '$window', function($window) {
-        var factory;
-        factory = {
-            current_user: function() {
-                return $window.gon.current_user;
-            }
-        };
-        return factory;
-    }
-]);

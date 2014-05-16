@@ -1,0 +1,29 @@
+<h2>{{movie.title}} ({{movie.year}})
+    <ul class="icon-menu pull-right">
+        <li><a href="" ng-click="toggleWatchlist(movie)" ng-class="{active: movie.watchlist}"><i class="fa fa-fw fa-eye"></i></a></li>
+        <li><a href=""><i class="fa fa-fw fa-comment"></i></a></li>
+        <li><a href="" ng-click="remove(movie)"><i class=" fa fa-fw fa-times"></i></a></li>
+    </ul>
+</h2>
+<div class="widget clearfix">
+    <img class="media-object pull-left" alt="" ng-src="{{movie.img}}">
+
+    <div class="media-body movie" ng-style="movie.backdrop != '' && {'background-image':'url('+backdrop+')'}">
+        <ul class="details">
+            <li><strong>TMDb:</strong> {{movie.rating}} from {{movie.votes}} users</li>
+            <li><strong>Ratings:</strong> Average 8.3 | IMDb 7.3 | Me 6.5</li>
+            <li><strong>Director:</strong> {{movie.director}}</li>
+            <li class="genres" ng-if="item.genres">
+                <span ng-repeat="genre in movie.genres">{{genre}}</span>
+            </li>
+        </ul>
+        <div class="plot">
+            {{movie.plot}}
+        </div>
+    </div>
+    <ul class="comments clearfix" ng-if="movie.reviews.length>0">
+        <li ng-repeat="c in movie.reviews | orderBy:date:true">
+            <span class="author">{{c.user}}:</span> {{c.text}}
+            <span class="time-ago" am-time-ago="c.date"></span></li>
+    </ul>
+</div>

@@ -1,4 +1,4 @@
-MDbControllers.controller('MoviesCtrl', function ($scope, Movies, Search, $http) {
+MDbControllers.controller('MoviesCtrl', function ($scope, $stateParams, Movies, Reviews, Search, $http, growl) {
 
     $scope.displayMode = 0;
     $scope.movieSort = "date";
@@ -14,11 +14,6 @@ MDbControllers.controller('MoviesCtrl', function ($scope, Movies, Search, $http)
     $scope.rate = 7;
     $scope.max = 10;
     $scope.isReadonly = false;
-
-    $scope.hoveringOver = function(value) {
-        $scope.overStar = value;
-        $scope.percent = 100 * (value / $scope.max);
-    };
 
     $scope.sortBy = function(predicate){
         console.log("sort by: " + predicate);
@@ -82,36 +77,33 @@ MDbControllers.controller('MoviesCtrl', function ($scope, Movies, Search, $http)
             return false;
 
         // genres
+        /*
         return _.some(movie.genres, function(gn) {
             return _.findWhere($scope.genreFilters, { selected: true, name: gn}) !== undefined;
         });
+        */
     };
 
     // Adding a new review
     $scope.review = { movie: '', text: '', rating: 0, favourite: false };
 
     $scope.dismiss = function() {
-        //$scope.$dismiss();
         $scope.$close(true);
     };
 
-    $scope.fetch = function() {
-        $scope.review.suggestions = Search.movies({query: $scope.review.movie, limit: 5});
-    }
-
-    $scope.save = function() {
+    $scope.createReview = function() {
 
         console.log($scope.review);
-       /*
-        Hubs.save({}, $scope.hub, function(createdHub) {
-            console.log(createdHub);
-            $rootScope.hubs.push(createdHub);
-            growl.addSuccessMessage("Successfully created the new hub " + createdHub.name);
+
+        Reviews.save({}, $scope.review, function(createdReview) {
+            console.log(createdReview);
+            //$rootScope.hubs.push(createdHub);
+            growl.addSuccessMessage("Successfully created your review for the movie " + $scope.review.movie.title);
             $scope.$close(true);
         }, function (e) {
-            growl.addErrorMessage("Unable to create the hub, please check your input!");
+            growl.addErrorMessage(e.data.error);
         });
-        */
+
     } ;
     $scope.selected = undefined;
 
@@ -132,5 +124,10 @@ MDbControllers.controller('MoviesCtrl', function ($scope, Movies, Search, $http)
                 return results;
             });
     };
+
+    if (!isNaN($stateParams.id)) {
+        $scope.movie = Movies.get({'Id': $stateParams.id});
+        console.log($scope.movie.backdrop);
+    }
 
 });

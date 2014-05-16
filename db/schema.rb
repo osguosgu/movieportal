@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140510170013) do
+ActiveRecord::Schema.define(version: 20140513202058) do
 
   create_table "comments", force: true do |t|
     t.text     "text"
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 20140510170013) do
 
   add_index "movies_genres", ["movie_id", "genre_id"], name: "index_movies_genres_on_movie_id_and_genre_id"
 
-  create_table "user_movies", force: true do |t|
+  create_table "reviews", force: true do |t|
     t.float    "rating"
     t.text     "review"
     t.boolean  "watchlist"
@@ -84,8 +84,8 @@ ActiveRecord::Schema.define(version: 20140510170013) do
     t.datetime "updated_at"
   end
 
-  add_index "user_movies", ["movie_id"], name: "index_user_movies_on_movie_id"
-  add_index "user_movies", ["user_id"], name: "index_user_movies_on_user_id"
+  add_index "reviews", ["movie_id"], name: "index_reviews_on_movie_id"
+  add_index "reviews", ["user_id"], name: "index_reviews_on_user_id"
 
   create_table "user_movies_hubs", id: false, force: true do |t|
     t.integer "user_movie_id"

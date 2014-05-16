@@ -60,6 +60,7 @@ class HubsController < ApplicationController
   def join
     if @hub.privacy == Hub::PRIVACY_PUBLIC
       @hub.users << current_user
+      #hub.save
       render.json { @hub }
     end
 
@@ -68,6 +69,7 @@ class HubsController < ApplicationController
 
   def leave
     @hub.users.destroy(current_user)
+    #hub.save
     render.json { head :no_content }
   end
 

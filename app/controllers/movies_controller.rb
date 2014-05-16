@@ -24,15 +24,26 @@ class MoviesController < ApplicationController
   # POST /movies
   # POST /movies.json
   def create
-    @movie = Movie.new(movie_params)
 
-    respond_to do |format|
-      if @movie.save
-        format.html { redirect_to @movie, notice: 'Movie was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @movie }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @movie.errors, status: :unprocessable_entity }
+    movie = TMDb::Movie.find(params[:id])
+    if movie != nil
+      logger.debug "found movie from tmdb: #{movie[:title]}"
+      @movie = Movie.new(
+          :tmdb_id => movie.id,
+          :imdb_id => movie.imdb_id,
+          :title => movie.title,
+          :year => movie.release_date[0,4],
+          :poster_image => movie.poster_path,
+          :backdrop_image => movie.backdrop_path)
+
+      respond_to do |format|
+        if @movie.save
+          format.html { redirect_to @movie, notice: 'Movie was successfully created.' }
+          format.json { render action: 'show', status: :created, location: @movie }
+        else
+          format.html { render action: 'new' }
+          format.json { render json: @movie.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
