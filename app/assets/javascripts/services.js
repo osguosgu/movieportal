@@ -27,7 +27,7 @@ mdb.factory("Reviews", function ($resource) {
         {Id: "@Id" },
         {
             "update": {method: "PUT"},
-            //"reviews": {'method': 'GET', 'params': {'reviews_only': "true"}, isArray: true}
+            "metadata": { url: "/reviews/metadata/:params.json", method: "POST" }
 
         }
     );

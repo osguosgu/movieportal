@@ -4,7 +4,9 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.json
   def index
-    @movies = Movie.all
+
+    # LEFT OUTER JOIN movies with current user's review
+    @movies = Movie.all.includes(:reviews).where(:reviews => { :user_id => current_user.id } )
   end
 
   # GET /movies/1

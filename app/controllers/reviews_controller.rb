@@ -1,10 +1,11 @@
 class ReviewsController < ApplicationController
   before_action :set_review, only: [:show, :edit, :update, :destroy]
+  protect_from_forgery :except => :metadata
 
   # GET /reviews
   # GET /reviews.json
   def index
-    @reviews = Review.all
+    @reviews = Review.joins(:movie).where(:user_id => current_user.id)
   end
 
   # GET /reviews/1
@@ -32,10 +33,7 @@ class ReviewsController < ApplicationController
     end
 
     # checking if the movie exists in db
-    movie = Movie.find_by_tmdb_id(params[:movie]["id"])
-    if (movie == nil)
-      movie = Movie.create_from_tmdb_id(params[:movie]["id"])
-    end
+    movie = Movie.find_by_tmdb_id(params[:movie]["id"]) || Movie.create_from_tmdb_id(params[:movie]["id"])
 
     @review = Review.new(:movie_id => movie.id, :user_id => current_user.id, :rating => params[:rating],
                          :review => params[:text], :favourite => params[:favourite], :watchlist => false)
@@ -48,6 +46,31 @@ class ReviewsController < ApplicationController
         format.html { render action: 'new' }
         format.json { render json: @review.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  # POST /reviews/metadata
+  # Update the watchlist/favourite status
+  def metadata
+    movie = Movie.find_by_tmdb_id(params[:movie_id]) || Movie.create_from_tmdb_id(params[:movie_id])
+    @review = Review.find_or_create_by(:user_id => current_user.id, :movie_id => movie.id)
+    #@review.watchlist = params[:watchlist]
+    if @review.update_attributes(params.permit(:watchlist, :favourite))
+      render action: 'show', status: :created, location: @review
+    else
+      render json: @review.errors, status: :unprocessable_entity
+    end
+  end
+
+  # POST /reviews/favourite
+  def favourite
+    movie = Movie.find_by_tmdb_id(params[:movie_id]) || Movie.create_from_tmdb_id(params[:movie_id])
+    @review = Review.find_or_create_by(:user_id => current_user.id, :movie_id => movie.id)
+    @review.favourite = params[:favourite]
+    if @review.save
+      render action: 'show', status: :created, location: @review
+    else
+      render json: @review.errors, status: :unprocessable_entity
     end
   end
 

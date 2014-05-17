@@ -8,7 +8,14 @@ Movieportal::Application.routes.draw do
     resources :reviews
   end
 
-  resources :movies, :search, :comments, :reviews
+  resources :reviews do
+    collection do
+      post 'metadata', to: :metadata
+    end
+
+  end
+
+  resources :movies, :search, :comments
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

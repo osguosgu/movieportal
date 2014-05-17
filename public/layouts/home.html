@@ -12,6 +12,7 @@
             <div class="media-body">
               <h4 class="media-heading">
                 <a ng-href="#/movies/{{item.id}}">{{item.title}} ({{item.year}})</a>
+                <a href="" ng-click="toggleFav(item)" ng-class="{active: item.favourite}"><i class="pull-right fa fa-fw fa-heart"></i></a>
                 <a href="" ng-click="toggleWatchlist(item)" ng-class="{active: item.watchlist}"><i class="pull-right fa fa-fw fa-eye"></i></a>
               </h4>
               <ul class="details">
@@ -70,6 +71,25 @@
         </ul>
         <div class="widget-alert-sm" ng-hide="watchlist.length">Your watchlist is empty.</div>
       </section>
+
+        <section class="widget">
+
+        <h3><i class="fa fa-fw fa-heart"></i> Favourites</h3>
+
+        <ul class="media-list news-feed" ng-show="favourites.length">
+            <li class="media" ng-repeat="movie in favourites = (movies | filter:{favourite:true})">
+                <a class="pull-left" href="#">
+                    <img class="media-object" alt="" ng-src="{{movie.img}}">
+                </a>
+                <div class="media-body">
+                    {{movie.title}} ({{movie.year}})
+                    <a href="" ng-click="toggleFav(movie)"><i class="pull-right fa fa-fw fa-times"></i></a>
+                    <div class="time-ago"><small><span am-time-ago="movie.date"></span></div>
+                </div>
+            </li>
+        </ul>
+        <div class="widget-alert-sm" ng-hide="favourites.length">You don't have any favourites.</div>
+    </section>
 
     </div>
   </div>
