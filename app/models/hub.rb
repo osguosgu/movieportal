@@ -8,5 +8,9 @@ class Hub < ActiveRecord::Base
   has_many :admin_hub_users, :class_name => 'HubUser::Admin'
   has_many :admin_users, :through => :admin_hub_users, :source => :user
 
-  has_and_belongs_to_many :movies
+  #has_and_belongs_to_many :movies
+  has_many :reviews, :through => :users
+
+  has_many :published_reviews, :class_name => 'Review::PublishedReview', :through => :users
+
 end

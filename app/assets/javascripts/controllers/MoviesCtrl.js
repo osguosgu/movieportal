@@ -1,6 +1,6 @@
-MDbControllers.controller('MoviesCtrl', function ($scope, $stateParams, Movies, Reviews, Search, $http, growl) {
+MDbControllers.controller('MoviesCtrl', function ($scope, $rootScope, $stateParams, Movies, Reviews, Search, $http, $cookieStore, growl) {
 
-    $scope.displayMode = 0;
+    $scope.displayMode = $cookieStore.get("displayMode") || 0;
     $scope.movieSort = "date";
     $scope.reverse = false;
     $scope.moviesQuery = '';
@@ -63,6 +63,7 @@ MDbControllers.controller('MoviesCtrl', function ($scope, $stateParams, Movies, 
 
     $scope.display = function(mode){
         $scope.displayMode = mode;
+        $cookieStore.put("displayMode", mode);
     };
 
     $scope.movieFilter = function(movie) {
@@ -71,6 +72,7 @@ MDbControllers.controller('MoviesCtrl', function ($scope, $stateParams, Movies, 
             return false;
 
         // years
+
         if (movie.year < $scope.yearStart)
             return false;
         if ($scope.yearEnd > 0 && movie.year > $scope.yearEnd)
@@ -82,6 +84,7 @@ MDbControllers.controller('MoviesCtrl', function ($scope, $stateParams, Movies, 
             return _.findWhere($scope.genreFilters, { selected: true, name: gn}) !== undefined;
         });
         */
+        return true;
     };
 
     // Adding a new review

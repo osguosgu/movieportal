@@ -142,6 +142,10 @@ a:hover, a:active {
 .rating-stars .fa { width: 1.1em }
 .rating-stars .fa-star { color: #FFBF00; }
 .rating-stars .fa-star-o { color: #CCC; -webkit-text-stroke-color: rgba(0,0,0,0.1) }
+.review-author .rating-stars {
+  font-size: 18px;
+  cursor: default;
+}
 
 .btn-default {
   border: 1px solid #fff;
@@ -193,7 +197,7 @@ a:hover, a:active {
   border-top: 1px solid rgba(51,51,51,0.25);
   padding: 12px;
   margin: 0 -12px;
-  cursor: pointer;
+  /*cursor: pointer;*/
   -webkit-transition: background-color 0.2s ease-out;
   -moz-transition: background-color 0.2s ease-out;
   -o-transition: background-color 0.2s ease-out;
@@ -625,7 +629,7 @@ background-color: rgba(51,51,51,0.4);
     position: relative;
     margin: 5px;
 }
-.hub-users img {
+.hub-users img, .review-author img {
     width: 35px;
     height: 35px;
 }
@@ -656,5 +660,13 @@ background-color: rgba(51,51,51,0.4);
 }
 .clearing {
     clear:both;
+}
 
+.comment-input {
+  margin-top: 5px;
+}
+
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover {
+  background: #1E9C89;
+  color: #FFF;
 }

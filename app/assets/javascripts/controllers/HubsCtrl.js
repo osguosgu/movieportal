@@ -1,4 +1,7 @@
-MDbControllers.controller('HubsCtrl', ['$scope', '$rootScope', '$stateParams', '$modal', 'Hubs', 'growl', function ($scope, $rootScope, $stateParams, $modal, Hubs, growl) {
+MDbControllers.controller('HubsCtrl', function ($scope, $rootScope, $stateParams, $modal, Hubs, Reviews, growl) {
+
+    $scope.reviewPredicate = "create_at";
+    $scope.reviewDesc = true;
 
     $scope.findHub = function() {
         return _.find($rootScope.hubs, function(hub) {
@@ -12,6 +15,16 @@ MDbControllers.controller('HubsCtrl', ['$scope', '$rootScope', '$stateParams', '
             $rootScope.hubs = _.without($rootScope.hubs, hub);
             growl.addSuccessMessage("You have deleted the hub " + hub.name);
         });
+    };
+
+    $scope.addComment = function(review) {
+      Reviews.comment({Id: review.id}, {text: review.comment}, function(response) {
+         console.log(response);
+        review.comments.push(response);
+        //growl.addSuccessMessage("You have deleted the hub ");
+      });
+      review.comment = "";
+      //growl.addSuccessMessage("You have deleted the hub ");
     };
 
     $scope.createHub = function() {
@@ -45,6 +58,10 @@ MDbControllers.controller('HubsCtrl', ['$scope', '$rootScope', '$stateParams', '
             }
         });
 
+    };
+
+    $scope.getUser = function(id) {
+      return _.findWhere($scope.hub.users, {id: id});
     };
 
     $scope.showPrivacy = function(privacy) {
@@ -85,4 +102,4 @@ MDbControllers.controller('HubsCtrl', ['$scope', '$rootScope', '$stateParams', '
             growl.addErrorMessage("Unable to create the hub, please check your input!");
         });
     }
-}]);
+});

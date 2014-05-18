@@ -26,12 +26,12 @@
 
         <a href="" id="menu-toggle" ng-click="sidebar=!sidebar" class="btn btn-primary pull-left" title="Show Sidebar"><i class="fa fa-bars"></i></a>
 
-        <nav class="icon-nav pull-right">
+        <!--<nav class="icon-nav pull-right">
           <ul>
             <li><a href="#" class="fa fa-fw fa-globe"><span class="sr-only">Notifications</span></a></li>
             <li><a href="#" class="fa fa-fw fa-comments"><span class="sr-only">Messages</span></a></li>
           </ul>
-        </nav>
+        </nav>-->
         <a class="btn btn-primary pull-right" ui-sref="movies.review">
           <i class="fa fa-pencil-square-o"></i> <span class="hide-sm">New Review</span>
         </a>
@@ -56,7 +56,7 @@
         </ul> <!--<a ng-href="#/hubs/{{slug(hub.name)}}">-->
       </li>
       <li><a href="" ng-click="popup('todo')"><i class="fa fa-fw fa-lg fa-eye"></i> <span>Watchlist</span></a></li>
-      <li><a href="" ng-click="popup('todo')"><i class="fa fa-fw fa-lg fa-comments"></i> <span>Discussions</span></a></li>
+      <li><a href="" ng-click="popup('todo')"><i class="fa fa-fw fa-lg fa-heart"></i> <span>Favourites</span></a></li>
       <li><a href="#/profile"><i class="fa fa-info"></i> Profile</a></li>
       <li><a href="<%= signout_path %>"><i class='fa fa-sign-out'></i> Logout</a></li>
     </ul>

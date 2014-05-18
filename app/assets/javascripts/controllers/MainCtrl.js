@@ -52,6 +52,10 @@ MDbControllers.controller('MainCtrl', function($scope, $rootScope, $state, growl
         });
     };
 
+  $scope.getMovie = function(id) {
+    return _.findWhere($rootScope.movies, {id: id});
+  };
+
     $scope.popup = function(msg) {
         growl.addSuccessMessage(msg);
     };
@@ -75,7 +79,7 @@ MDbControllers.controller('MainCtrl', function($scope, $rootScope, $state, growl
         }
     ];
 
-    $scope.movies = Movies.query();/*
+    $rootScope.movies = Movies.query();/*
         {
             title: "Ride Along",
             date: moment().subtract('minutes', 2),

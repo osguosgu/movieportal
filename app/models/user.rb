@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   has_many :administrated_hubs, :through => :admin_hub_users, :source => :hub
   has_many :reviews
   has_many :movies, :through => :reviews
+  has_many :published_reviews, :class_name => 'Review::PublishedReview'
+  has_many :comments
 
   def self.from_omniauth(auth)
     where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|

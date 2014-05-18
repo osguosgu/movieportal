@@ -6,7 +6,7 @@
     <p>{{hub.description}}</p>
 
     <a ng-if="hub.is_admin == true" href="" ng-click="deleteHub(hub)" class="btn btn-primary">Delete hub</a>
-    <a ng-if="hub.is_member == true" href="" ng-click="leaveHub(hub)" class="btn btn-primary">Leave hub</a>
+    <a ng-if="hub.is_member == true && hub.is_admin == false" href="" ng-click="leaveHub(hub)" class="btn btn-primary">Leave hub</a>
 </section>
 <section class="widget widget-alert" ng-if="myHubs.length==0" class="error">You're not in any hubs.</section>
 

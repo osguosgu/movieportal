@@ -1,7 +1,7 @@
 <h2>Movies
 <section class="pull-right display-mode">
 <select class="form-control" ng-model="movieSort">
-<option value="rating-imdb" selected>Sort by rating in IMDb</option>
+<option value="rating-tmdb" selected>Sort by rating in TMDb</option>
 <option ng-value="'rating-' + $index" ng-repeat="grp in groups">Sort by rating in {{grp.name}}</option>
 <option value="title">Sort by title</option>
 <option value="year">Sort by release year</option>
@@ -70,7 +70,7 @@ to
 <th ng-click="sortBy('title')">Title</th>
 <th ng-click="sortBy('year')">Year</th>
 <th>Genres</th>
-<th ng-click="sortBy('rating-imdb')">IMDb</th>
+<th ng-click="sortBy('rating-tmdb')">TMDb</th>
 <th ng-click="sortBy('rating-'+$index)" ng-repeat="grp in groups">{{grp.name}}</th>
 <th>Me</th>
 </tr></thead>
@@ -84,8 +84,7 @@ to
 <td>
 <ul class="icon-menu">
 <li><a href="" ng-click="toggleWatchlist(movie)" ng-class="{active: movie.watchlist}"><i class=" fa fa-fw fa-eye"></i></a></li>
-<li><a href=""><i class=" fa fa-fw fa-comment"></i></a></li>
-<li><a href="" ng-click="remove(movie)"><i class=" fa fa-fw fa-times"></i></a></li>
+<li><a href="" ng-click="toggleFav(movie)" ng-class="{active: movie.favourite}"><i class=" fa fa-fw fa-heart"></i></a></li>
 </ul>
 </ul>
 </td>
@@ -98,19 +97,18 @@ to
 <div class="tile" ng-class="{'tile-lg': displayMode==1}" ng-repeat="movie in filteredMovies track by $index">
 
 <section class="widget">
-<h3><a data-toggle="modal" data-target="#paymentModal" ng-click="selectMovie(movie)" href="">{{movie.title}} ({{movie.year}}) </a>
+<h3><a ng-href="#/movies/{{movie.id}}">{{movie.title}} ({{movie.year}}) </a>
 <ul class="icon-menu pull-right">
 <li><a href="" ng-click="toggleWatchlist(movie)" ng-class="{active: movie.watchlist}"><i class="fa fa-fw fa-eye"></i></a></li>
-<li><a href=""><i class="fa fa-fw fa-comment"></i></a></li>
-<li><a href="" ng-click="remove(movie)"><i class=" fa fa-fw fa-times"></i></a></li>
+<li><a href="" ng-click="toggleFav(movie)"><i class=" fa fa-fw fa-heart"></i></a></li>
 </ul>
 </h3>
-<img class="media-object pull-left" alt="" ng-src="{{movie.img}}">
+<img class="media-object pull-left" alt="" ng-src="{{movie.image}}">
 
 <div class="media-body movie">
 <ul class="details">
-<li><strong><a href="#">IMDb:</a></strong> {{movie.rating}} from {{movie.votes}} users</li>
-<li><strong>Ratings:</strong> Average 8.3 | IMDb 7.3 | Me 6.5</li>
+<li><strong><a href="#">TMDb:</a></strong> {{movie.rating}} from {{movie.votes}} users</li>
+<li><strong>Ratings:</strong> Average 8.3 | TMDb 7.3 | Me 6.5</li>
 <li class="genres" ng-if="item.genres">
 <span ng-repeat="genre in movie.genres">{{genre}}</span>
 </li>
@@ -119,14 +117,6 @@ to
 {{movie.plot}}
 </div>
 </div>
-<ul class="comments clearfix" ng-if="movie.comments.length>0">
-<li ng-repeat="c in movie.comments | orderBy:date:true | limitTo:4">
-    <span class="author">{{c.user}}:</span> {{c.comment}}
-    <span class="time-ago" am-time-ago="c.date"></span>
-</li>
-</ul>
-<input type="text" ng-enter="addComment(movie,index)" placeholder="Comment..." ng-model="comment[$index]" style="width:90%">
-
 </section>
 </div>
 </div>

@@ -7,7 +7,7 @@
         <ul class="media-list movies-recommended">
           <li class="media" ng-repeat="item in movies | orderBy:predicate | filter: movieFilter">
             <a class="pull-left" href="#">
-              <img class="media-object" alt="" ng-src="{{item.img}}">
+              <img class="media-object" alt="" ng-src="{{item.image}}">
             </a>
             <div class="media-body">
               <h4 class="media-heading">
@@ -43,7 +43,7 @@
         <ul class="media-list news-feed">
           <li class="media" ng-repeat="item in newsFeed | orderBy:predicate">
             <a class="pull-left" href="#">
-              <img class="media-object" alt="" ng-src="{{item.img}}">
+              <img class="media-object" alt="" ng-src="{{item.image}}">
             </a>
             <div class="media-body">
               {{item.user}} {{item.msg}}
@@ -60,7 +60,7 @@
         <ul class="media-list news-feed" ng-show="watchlist.length">
           <li class="media" ng-repeat="movie in watchlist = (movies | filter:{watchlist:true})">
             <a class="pull-left" href="#">
-              <img class="media-object" alt="" ng-src="{{movie.img}}">
+              <img class="media-object" alt="" ng-src="{{movie.image}}">
             </a>
             <div class="media-body">
               {{movie.title}} ({{movie.year}})
@@ -79,7 +79,7 @@
         <ul class="media-list news-feed" ng-show="favourites.length">
             <li class="media" ng-repeat="movie in favourites = (movies | filter:{favourite:true})">
                 <a class="pull-left" href="#">
-                    <img class="media-object" alt="" ng-src="{{movie.img}}">
+                    <img class="media-object" alt="" ng-src="{{movie.image}}">
                 </a>
                 <div class="media-body">
                     {{movie.title}} ({{movie.year}})

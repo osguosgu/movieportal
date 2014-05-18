@@ -27,7 +27,8 @@ mdb.factory("Reviews", function ($resource) {
         {Id: "@Id" },
         {
             "update": {method: "PUT"},
-            "metadata": { url: "/reviews/metadata/:params.json", method: "POST" }
+            "metadata": { url: "/reviews/metadata/:params.json", method: "POST" },
+            "comment": { url: "/reviews/:Id/comments.json", method: "POST" }
 
         }
     );

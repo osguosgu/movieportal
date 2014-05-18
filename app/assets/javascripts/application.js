@@ -18,6 +18,8 @@
 //= require angular-ui-router.min
 //= require angular-resource
 //= require angular-animate
+//= require angular-cookies
+//= require loading-bar.min
 //= require angular-touch
 //= require angular-growl.min
 //= require angular-moment.min

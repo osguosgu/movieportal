@@ -11,6 +11,7 @@ class ReviewsController < ApplicationController
   # GET /reviews/1
   # GET /reviews/1.json
   def show
+    @review = Review.contains(:movie, :user).find(params[:id])
   end
 
   # GET /reviews/new
@@ -54,7 +55,7 @@ class ReviewsController < ApplicationController
   def metadata
     movie = Movie.find_by_tmdb_id(params[:movie_id]) || Movie.create_from_tmdb_id(params[:movie_id])
     @review = Review.find_or_create_by(:user_id => current_user.id, :movie_id => movie.id)
-    #@review.watchlist = params[:watchlist]
+
     if @review.update_attributes(params.permit(:watchlist, :favourite))
       render action: 'show', status: :created, location: @review
     else

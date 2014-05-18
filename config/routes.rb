@@ -9,6 +9,8 @@ Movieportal::Application.routes.draw do
   end
 
   resources :reviews do
+    resources :comments
+
     collection do
       post 'metadata', to: :metadata
     end

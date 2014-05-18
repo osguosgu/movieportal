@@ -3,7 +3,9 @@ var mdb = angular.module('mdb', [
   'angularMoment',
   'ui.router',
   'ngResource',
+  'ngCookies',
   'ngAnimate',
+  'angular-loading-bar',
   'ngAnimate-animate.css',
   'ngTouch',
   'ui.bootstrap',
@@ -48,11 +50,6 @@ mdb.config(function($stateProvider, $urlRouterProvider) {
             controller: 'HubsCtrl',
             templateUrl: '../layouts/hub_detail.html'
         })
-        .state('movie_detail', {
-            url: "/movies/:id",
-            controller: 'MoviesCtrl',
-            templateUrl: "../layouts/movie_detail.html"
-        })
         .state('movies', {
             url: "/movies",
             controller: 'MoviesCtrl',
@@ -70,6 +67,11 @@ mdb.config(function($stateProvider, $urlRouterProvider) {
                         return $state.transitionTo("movies");
                     });
             }
+        })
+        .state('movie_detail', {
+            url: "/movies/:id",
+            controller: 'MoviesCtrl',
+            templateUrl: "../layouts/movie_detail.html"
         })
         .state('own_profile', {
             url: "/profile",

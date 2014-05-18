@@ -1,18 +1,87 @@
 
-<h2>{{hub.name}}</h2>
-<section class="widget">
+<h2>{{hub.name}}
+    <a ng-if="hub.is_admin == true" class="btn btn-primary pull-right" ui-sref="hubs.create">Invite users</a>
+    <a ng-if="hub.is_member == true && hub.is_admin == false" class="btn btn-primary pull-right" ui-sref="hubs.create">Leave hub</a>
+</h2>
 
-{{showPrivacy(hub.privacy)}}
+<div class="row">
+  <div class="col-md-8">
+    <section class="widget">
+      <h3><i class="fa fa-fw fa-film"></i> Reviews by users</h3>
 
-<h4>Description:</h4>
-{{hub.description}}
+      <ul class="media-list movies-recommended">
+        <li class="media" ng-repeat="review in hub.reviews | orderBy:reviewPredicate:reviewDesc">
+          <a class="pull-left" href="#">
+            <img class="media-object" alt="" ng-src="{{review.movie.image}}">
+          </a>
+          <div class="media-body">
+            <h4 class="media-heading">
+              <a ng-href="#/movies/{{review.movie.id}}">{{review.movie.title}} ({{review.movie.year}})</a>
+              <a href="" ng-click="toggleWatchlist(review.movie)" ng-class="{active: review.movie.watchlist}"><i class="fa fa-fw fa-eye"></i></a>
+              <a href="" ng-click="toggleFav(review.movie)" ng-class="{active: review.movie.favourite}"><i class="fa fa-fw fa-heart"></i></a>
+              <div class="pull-right review-author">
+                <div class="rating-stars"><rating value="review.rating" readonly="true" max="10"></rating></div>
+                <div class="author"><img ng-src="{{review.user.image}}"> {{review.user.name}}</div>
+                <div>{{ review.updated_at | amCalendar }}</div>
 
-<h4>Users in the group:</h4>
-<ul ng-repeat="user in hub.users" class="hub-users">
-    <li>
-        <img ng-src="{{user.image}}">
-        <a ui-sref="{{user.id==currentUser.id ? 'own_profile' : 'user_profile({id: user.id})'}}">{{user.name}}</a>
-        <span ng-if="user.is_admin" class="badge">admin</span>
-    </li>
-</ul>
-</section>
+              </div>
+            </h4>
+            <ul class="details">
+
+              {{review.review}}
+
+              <ul class="comments clearfix">
+                <li ng-repeat="c in review.comments | orderBy:date:true | limitTo:40">
+                  <span class="author">{{getUser(c.user_id).name}}:</span> {{c.text}}
+                  <span class="time-ago" am-time-ago="c.created_at"></span>
+                </li>
+                <li><input type="text" class="form-control comment-input" ng-enter="addComment(review)" ng-model="review.comment" placeholder="Comment..."></li>
+              </ul>
+
+
+
+
+
+              <!--<li><strong><a href="#">TMDb:</a></strong> {{item.rating}} from {{item.votes}} users</li>-->
+              <li class="genres" ng-if="item.genres">
+                <span ng-repeat="genre in item.genres">{{genre}}</span>
+              </li>
+            </ul>
+            <div class="plot">
+              {{item.plot}}
+            </div>
+            <ul class="comments clearfix" ng-if="item.comments.length>0">
+              <li ng-repeat="c in item.comments | orderBy:date:true | limitTo:4">
+                <span class="author">{{c.user}}:</span> {{c.comment}}
+                <span class="time-ago" am-time-ago="c.date"></span></li>
+            </ul>
+
+          </div>
+        </li>
+      </ul>
+
+    </section>
+  </div>
+
+
+  <div class="col-md-4">
+
+    <section class="widget">
+
+      <h3><i class="fa fa-fw fa-film"></i> Hub details</h3>
+    <p><strong>Privacy:</strong> {{showPrivacy(hub.privacy)}}</p>
+
+    <p><strong>Description:</strong>
+    {{hub.description}}</p>
+
+    <strong>Users in the hub:</strong>
+    <ul ng-repeat="user in hub.users" class="hub-users">
+        <li>
+            <img ng-src="{{user.image}}">
+            <a ui-sref="{{user.id==currentUser.id ? 'own_profile' : 'user_profile({id: user.id})'}}">{{user.name}}</a>
+            <span ng-if="user.is_admin" class="badge">admin</span>
+        </li>
+    </ul>
+    </section>
+  </div>
+</div>
