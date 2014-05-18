@@ -1,7 +1,7 @@
 <h2>My hubs
     <a class="btn btn-primary pull-right" ui-sref="hubs.create">Create a new hub</a>
 </h2>
-<section class="widget" ng-repeat="hub in myHubs = (hubs | filter: hub.is_member)">
+<section class="widget" ng-repeat="hub in myHubs = (hubs | filter:{is_member:true})">
     <h3>{{hub.name}} <span class="badge">{{showPrivacy(hub.privacy)}}</span></h3>
     <p>{{hub.description}}</p>
 
@@ -12,13 +12,11 @@
 
 
 <h2>Public hubs</h2>
-<section class="widget" ng-repeat="hub in publicHubs = (hubs | filter: hub.privacy < 2 && hub.is_member == false)">
+<section class="widget" ng-repeat="hub in publicHubs = (hubs | filter: {is_member: false })">
     <h3>{{hub.name}} <span class="badge">{{showPrivacy(hub.privacy)}}</span></h3>
     <p>{{hub.description}}</p>
 
     <a ng-if="hub.is_member == false && hub.privacy==1" href="" ng-click="joinHub(hub)" class="btn btn-primary">Request to join hub</a>
     <a ng-if="hub.is_member == false && hub.privacy==0" href="" ng-click="joinHub(hub)" class="btn btn-primary">Join hub</a>
-
-    <a href="" class="btn btn-primary">Join hub</a>
 </section>
 <section class="widget widget-alert" ng-if="publicHubs.length==0" class="error">No public hubs to show.</section>

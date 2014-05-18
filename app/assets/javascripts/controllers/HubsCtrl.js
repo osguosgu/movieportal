@@ -17,6 +17,20 @@ MDbControllers.controller('HubsCtrl', function ($scope, $rootScope, $stateParams
         });
     };
 
+    $scope.joinHub = function(hub) {
+      Hubs.join({Id : hub.id}, {}, function(response) {
+        hub.is_member = true;
+        growl.addSuccessMessage("You have joined the hub " + hub.name);
+      });
+    };
+
+    $scope.leaveHub = function(hub) {
+      Hubs.leave({Id : hub.id}, {}, function(response) {
+        hub.is_member = false;
+        growl.addSuccessMessage("You have left the hub " + hub.name);
+      });
+    };
+
     $scope.addComment = function(review) {
       Reviews.comment({Id: review.id}, {text: review.comment}, function(response) {
          console.log(response);
@@ -57,7 +71,6 @@ MDbControllers.controller('HubsCtrl', function ($scope, $rootScope, $stateParams
                 };
             }
         });
-
     };
 
     $scope.getUser = function(id) {
@@ -72,7 +85,6 @@ MDbControllers.controller('HubsCtrl', function ($scope, $rootScope, $stateParams
                 return "Closed";
             default:
                 return "Open";
-
         }
     }
 

@@ -1,5 +1,5 @@
 class HubsController < ApplicationController
-  before_action :set_hub, only: [:show, :edit, :update, :destroy]
+  before_action :set_hub, only: [:show, :edit, :update, :destroy, :join, :leave]
   include ActionController::Live
   Mime::Type.register "text/event-stream", :stream
 
@@ -62,18 +62,21 @@ class HubsController < ApplicationController
   end
 
   def join
-    if @hub.privacy == Hub::PRIVACY_PUBLIC
-      @hub.users << current_user
-      #hub.save
-      render.json { @hub }
-    end
-
+    #if @hub.privacy == Hub::PRIVACY_PUBLIC
+    #@hub = Hub.find(params[:Id])
+    @hub.users << current_user
+      if @hub.save
+        render action: 'show', status: :created, location: @hub
+      else
+        render json: @review.errors, status: :unprocessable_entity
+      end
+    #end
+    logger.debug("end")
     render.json { head :no_content }
   end
 
   def leave
     @hub.users.destroy(current_user)
-    #hub.save
     render.json { head :no_content }
   end
 

@@ -27,6 +27,10 @@ MDbControllers.controller('MainCtrl', function($scope, $rootScope, $state, growl
         return str;
     };
 
+    $scope.user_tn = function(uid) {
+      return "https://graph.facebook.com/" + uid + "/picture";
+    }
+
     $scope.genreFilters = [
         { name: "Action", selected: true },
         { name: "Adventure", selected: true },

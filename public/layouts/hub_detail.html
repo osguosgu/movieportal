@@ -21,7 +21,7 @@
               <a href="" ng-click="toggleFav(review.movie)" ng-class="{active: review.movie.favourite}"><i class="fa fa-fw fa-heart"></i></a>
               <div class="pull-right review-author">
                 <div class="rating-stars"><rating value="review.rating" readonly="true" max="10"></rating></div>
-                <div class="author"><img ng-src="{{review.user.image}}"> {{review.user.name}}</div>
+                <div class="author"><img ng-src="{{user_tn(review.user.uid)}}"> {{review.user.name}}</div>
                 <div>{{ review.updated_at | amCalendar }}</div>
 
               </div>
@@ -77,7 +77,7 @@
     <strong>Users in the hub:</strong>
     <ul ng-repeat="user in hub.users" class="hub-users">
         <li>
-            <img ng-src="{{user.image}}">
+            <img ng-src="{{user_tn(user.uid)}}">
             <a ui-sref="{{user.id==currentUser.id ? 'own_profile' : 'user_profile({id: user.id})'}}">{{user.name}}</a>
             <span ng-if="user.is_admin" class="badge">admin</span>
         </li>

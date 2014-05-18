@@ -54,8 +54,8 @@ mdb.factory("Hubs", function ($resource) {
         {Id: "@Id" },
         {
             "update": {method: "PUT"},
-            //"reviews": {'method': 'GET', 'params': {'reviews_only': "true"}, isArray: true}
-
+            "join": { url: "/hubs/:Id/join.json", method: "POST" },
+            "leave": { url: "/hubs/:Id/leave.json", method: "POST" }
         }
     );
 });

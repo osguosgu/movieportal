@@ -2,6 +2,10 @@ Movieportal::Application.routes.draw do
 
   resources :hubs do
     resources :users
+    member do
+      post 'join', to: :join
+      post 'leave', to: :leave
+    end
   end
 
   resources :users do

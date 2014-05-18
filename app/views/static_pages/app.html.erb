@@ -52,7 +52,7 @@
       <li><a href="#/movies"><i class="fa fa-fw fa-lg fa-film"></i> <span>Movies</span></a></li>
       <li><a href="#/hubs"><i class="fa fa-fw fa-lg fa-group"></i> <span>Hubs</span></a>
         <ul>
-          <li ng-repeat="hub in hubs"><a ng-href="#/hubs/{{hub.id}}">{{hub.name}} <span class="badge pull-right" ng-if="hub.notifications > 0">{{hub.notifications}}</span></a></li>
+          <li ng-repeat="hub in hubs | filter:{is_member:true}"><a ng-href="#/hubs/{{hub.id}}">{{hub.name}} <span class="badge pull-right" ng-if="hub.notifications > 0">{{hub.notifications}}</span></a></li>
         </ul> <!--<a ng-href="#/hubs/{{slug(hub.name)}}">-->
       </li>
       <li><a href="" ng-click="popup('todo')"><i class="fa fa-fw fa-lg fa-eye"></i> <span>Watchlist</span></a></li>

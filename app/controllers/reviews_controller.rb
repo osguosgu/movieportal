@@ -63,18 +63,6 @@ class ReviewsController < ApplicationController
     end
   end
 
-  # POST /reviews/favourite
-  def favourite
-    movie = Movie.find_by_tmdb_id(params[:movie_id]) || Movie.create_from_tmdb_id(params[:movie_id])
-    @review = Review.find_or_create_by(:user_id => current_user.id, :movie_id => movie.id)
-    @review.favourite = params[:favourite]
-    if @review.save
-      render action: 'show', status: :created, location: @review
-    else
-      render json: @review.errors, status: :unprocessable_entity
-    end
-  end
-
   # PATCH/PUT /reviews/1
   # PATCH/PUT /reviews/1.json
   def update
