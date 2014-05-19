@@ -6,7 +6,7 @@ class MoviesController < ApplicationController
   def index
 
     # LEFT OUTER JOIN movies with current user's review
-    @movies = Movie.all.includes(:reviews).where(:reviews => { :user_id => current_user.id } )
+    @movies = Movie.all #.includes(:reviews).where(:reviews => { :user_id => current_user.id } )
     @base = $tmdb.base_url
   end
 

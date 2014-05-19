@@ -18,7 +18,7 @@
 
 <body ng-controller="MainCtrl">
 
-<div id="wrapper" ng-cloak ng-class="{active: sidebar}" ng-swipe-left="{active: true}" ng-swipe-right="{active: false}">
+<div id="wrapper" ng-cloak ng-class="{active: sidebar}" ng-swipe-left="{sidebar: true}" ng-swipe-right="{sidebar: false}">
 
   <!-- topbar -->
   <div class="topbar">
@@ -34,12 +34,12 @@
             <li><a href="#" class="fa fa-fw fa-comments"><span class="sr-only">Messages</span></a></li>
           </ul>
         </nav>-->
-        <a class="btn btn-primary pull-right" ui-sref="movies.review">
+        <a class="btn btn-primary pull-right" ui-sref="movies.review"  ng-hide="sidebar">
           <i class="fa fa-pencil-square-o"></i> <span class="hide-sm">New Review</span>
         </a>
 
         <div class="col-xs-7">
-          <input class="form-control has-feedback" type="search" placeholder="Search for movies" ng-model="search"
+          <input ng-hide="sidebar" class="form-control has-feedback" type="search" placeholder="Search for movies" ng-model="search"
                  typeahead="movie as movie.title for movie in autoComplete($viewValue)"
                  typeahead-min-length="3" typeahead-wait-ms="300" typeahead-editable="false"
                  typeahead-loading="loadingMovies" typeahead-on-select="goToMovie($item, $model, $label)">
