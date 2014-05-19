@@ -1,7 +1,6 @@
 class HubsController < ApplicationController
   before_action :set_hub, only: [:show, :edit, :update, :destroy, :join, :leave]
-  include ActionController::Live
-  Mime::Type.register "text/event-stream", :stream
+
 
   # GET /hubs
   # GET /hubs.json
@@ -60,22 +59,27 @@ class HubsController < ApplicationController
   def join
     #if @hub.privacy == Hub::PRIVACY_PUBLIC
     #@hub = Hub.find(params[:Id])
-    unless @hubs.users.exists?(:conditions => { :user_id => current_user.id, :hub_id => params[:Id] })
-      @hub.users << current_user
-        if @hub.save
-          render action: 'show', status: :created, location: @hub
-        else
-          render json: @review.errors, status: :unprocessable_entity
-        end
-      #end
-      logger.debug("end")
-      render.json { head :no_content }
+    respond_to do |format|
+      if @hub.hub_users.exists? :user_id => current_user.id
+        format.json { render :json => {:message => "Already a member"} }
+      else
+        @hub.users << current_user
+          if @hub.save
+            format.json { render :json => {:message => "Success"} }
+          else
+            format.json { render json: @hub.errors, status: :unprocessable_entity }
+          end
+      end
     end
+
   end
 
   def leave
     @hub.users.destroy(current_user)
-    render.json { head :no_content }
+    respond_to do |format|
+      format.html { redirect_to hubs_url }
+      format.json { head :no_content }
+    end
   end
 
   # DELETE /hubs/1
