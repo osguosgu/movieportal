@@ -5,7 +5,7 @@ end
 if @movie.backdrop_image
     json.backdrop "#{$tmdb.base_url}w1280#{@movie.backdrop_image}"
 end
-json.reviews @movie.reviews do |json, review|
+json.reviews @movie.published_reviews do |json, review|
   json.user_id review.user.id
   json.user review.user.name
   json.rating review.rating
@@ -16,3 +16,6 @@ json.reviews @movie.reviews do |json, review|
   end
   json.date review.updated_at
 end
+
+json.tmdb @tmdb
+json.trailers @trailers

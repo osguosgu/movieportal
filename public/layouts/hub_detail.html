@@ -16,7 +16,7 @@
           </a>
           <div class="media-body">
             <h4 class="media-heading">
-              <a ng-href="#/movies/{{review.movie.id}}">{{review.movie.title}} ({{review.movie.year}})</a>
+              <a ng-href="#/movies/{{review.movie.tmdb_id}}">{{review.movie.title}} ({{review.movie.year}})</a>
               <a href="" ng-click="toggleWatchlist(review.movie)" ng-class="{active: review.movie.watchlist}"><i class="fa fa-fw fa-eye"></i></a>
               <a href="" ng-click="toggleFav(review.movie)" ng-class="{active: review.movie.favourite}"><i class="fa fa-fw fa-heart"></i></a>
               <div class="pull-right review-author">

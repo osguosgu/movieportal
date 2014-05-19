@@ -43,16 +43,26 @@ MDbControllers.controller('MainCtrl', function($scope, $rootScope, $state, growl
     ];
 
     $scope.toggleWatchlist = function(movie) {
-        Reviews.metadata({movie_id:  movie.tmdb_id, watchlist: !movie.watchlist}, function(response) {
+        Reviews.metadata({movie_id:  (movie.tmdb_id ||  movie.id), watchlist: !movie.watchlist}, function(response) {
             $scope.popup(movie.title + (!movie.watchlist ? " added to" : " removed from") + " watchlist.");
             movie.watchlist = !movie.watchlist;
+            if (!movie.tmdb_id) {
+              $rootScope.movies.push(response);
+            }
+            else
+              movie.watchlist = !movie.watchlist;
         });
     };
 
     $scope.toggleFav = function(movie) {
-        Reviews.metadata({movie_id:  movie.tmdb_id, favourite: !movie.favourite}, function(response) {
+        Reviews.metadata({movie_id: (movie.tmdb_id ||  movie.id), favourite: !movie.favourite}, function(response) {
             $scope.popup(movie.title + (!movie.favourite ? " added to" : " removed from") + " favourites.");
-            movie.favourite = !movie.favourite;
+
+            if (!movie.tmdb_id) {
+              $rootScope.movies.push(response);
+            }
+            else
+              movie.favourite = !movie.favourite;
         });
     };
 
@@ -83,7 +93,10 @@ MDbControllers.controller('MainCtrl', function($scope, $rootScope, $state, growl
         }
     ];
 
-    $rootScope.movies = Movies.query();/*
+    $rootScope.movies = Movies.query();
+    $rootScope.popular = Search.popularMovies();
+    $rootScope.upcoming = Search.upcomingMovies();
+    /*
         {
             title: "Ride Along",
             date: moment().subtract('minutes', 2),

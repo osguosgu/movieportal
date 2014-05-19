@@ -53,11 +53,12 @@ class ReviewsController < ApplicationController
   # POST /reviews/metadata
   # Update the watchlist/favourite status
   def metadata
-    movie = Movie.find_by_tmdb_id(params[:movie_id]) || Movie.create_from_tmdb_id(params[:movie_id])
-    @review = Review.find_or_create_by(:user_id => current_user.id, :movie_id => movie.id)
+    @movie = Movie.find_by_tmdb_id(params[:movie_id]) || Movie.create_from_tmdb_id(params[:movie_id])
+    @review = Review.find_or_create_by(:user_id => current_user.id, :movie_id => @movie.id)
 
     if @review.update_attributes(params.permit(:watchlist, :favourite))
-      render action: 'show', status: :created, location: @review
+      #render action: 'show', status: :created, location: movie
+      render 'movies/show'
     else
       render json: @review.errors, status: :unprocessable_entity
     end

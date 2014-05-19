@@ -2,10 +2,10 @@
   <div class="row">
     <div class="col-md-8">
       <section class="widget">
-        <h3><i class="fa fa-fw fa-film"></i> Movies</h3>
+        <h3><i class="fa fa-fw fa-film"></i> Popular Movies</h3>
 
         <ul class="media-list movies-recommended">
-          <li class="media" ng-repeat="item in movies | orderBy:predicate | filter: movieFilter">
+          <li class="media" ng-repeat="item in popular | orderBy:predicate | filter: movieFilter">
             <a class="pull-left" href="#">
               <img class="media-object" alt="" ng-src="{{item.image}}">
             </a>
@@ -34,6 +34,41 @@
           </li>
         </ul>
       </section>
+
+      <section class="widget">
+        <h3><i class="fa fa-fw fa-film"></i> Upcoming Movies</h3>
+
+        <ul class="media-list movies-recommended">
+          <li class="media" ng-repeat="item in upcoming | orderBy:predicate | filter: movieFilter">
+            <a class="pull-left" href="#">
+              <img class="media-object" alt="" ng-src="{{item.poster}}">
+            </a>
+            <div class="media-body">
+              <h4 class="media-heading">
+                <a ng-href="#/movies/{{item.id}}">{{item.title}} ({{item.release_date | limitTo:4}})</a>
+                <a href="" ng-click="toggleFav(item)" ng-class="{active: item.favourite}"><i class="pull-right fa fa-fw fa-heart"></i></a>
+                <a href="" ng-click="toggleWatchlist(item)" ng-class="{active: item.watchlist}"><i class="pull-right fa fa-fw fa-eye"></i></a>
+              </h4>
+              <ul class="details">
+                <!--<li><strong><a href="#">TMDb:</a></strong> {{item.rating}} from {{item.votes}} users</li>-->
+                <li class="genres" ng-if="item.genres">
+                  <span ng-repeat="genre in item.genres">{{genre}}</span>
+                </li>
+              </ul>
+              <div class="plot">
+                {{item.plot}}
+              </div>
+              <ul class="comments clearfix" ng-if="item.comments.length>0">
+                <li ng-repeat="c in item.comments | orderBy:date:true | limitTo:4">
+                  <span class="author">{{c.user}}:</span> {{c.comment}}
+                  <span class="time-ago" am-time-ago="c.date"></span></li>
+              </ul>
+
+            </div>
+          </li>
+        </ul>
+      </section>
+
     </div>
     <div class="col-md-4">
       <section class="widget">

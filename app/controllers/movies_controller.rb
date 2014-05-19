@@ -1,5 +1,5 @@
 class MoviesController < ApplicationController
-  before_action :set_movie, only: [:show, :edit, :update, :destroy]
+  before_action :set_movie, only: [:edit, :update, :destroy]
 
   # GET /movies
   # GET /movies.json
@@ -11,7 +11,20 @@ class MoviesController < ApplicationController
 
   # GET /movies/1
   # GET /movies/1.json
+  # Searches using TMDb ID instead of our own ID
   def show
+    @movie = Movie.includes(:reviews).where(:reviews => { :user_id => current_user.id } ).find_by_tmdb_id(params[:id])
+    @tmdb = TMDb::Movie.find(params[:id])
+    @trailers = TMDb::Movie.trailers(params[:id])
+    if @movie == nil
+      @movie = Movie.new(
+          :tmdb_id => @tmdb.id,
+          :imdb_id => @tmdb.imdb_id,
+          :title => @tmdb.title,
+          :year => @tmdb.release_date[0,4],
+          :poster_image => @tmdb.poster_path,
+          :backdrop_image => @tmdb.backdrop_path)
+    end
   end
 
   # GET /movies/new

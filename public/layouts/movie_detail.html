@@ -10,15 +10,17 @@
 
     <div class="media-body movie" ng-style="movie.backdrop != '' && {'background-image':'url('+backdrop+')'}">
         <ul class="details">
-            <li><strong>TMDb:</strong> {{movie.rating}} from {{movie.votes}} users</li>
-            <li><strong>Ratings:</strong> Average 8.3 | IMDb 7.3 | Me 6.5</li>
-            <li><strong>Director:</strong> {{movie.director}}</li>
-            <li class="genres" ng-if="item.genres">
-                <span ng-repeat="genre in movie.genres">{{genre}}</span>
+            <li><strong>TMDb:</strong> {{movie.tmdb.vote_average}} from {{movie.tmdb.vote_count}} votes</li>
+            <li>
+              <a target="_blank" ng-href="http://www.imdb.com/title/{{movie.tmdb.imdb_id}}"><i class="fa fa-external-link"></i> View in IMDb</a>  |
+              <a target="_blank" ng-href="http://www.themoviedb.org/movie/{{movie.tmdb.id}}"><i class="fa fa-external-link"></i> View in TMDb</a></li>
+
+            <li class="genres" ng-if="movie.tmdb.genres">
+                <span ng-repeat="genre in movie.tmdb.genres">{{genre.name}}</span>
             </li>
         </ul>
         <div class="plot">
-            {{movie.plot}}
+            {{movie.tmdb.overview}}
         </div>
     </div>
     <ul class="comments clearfix" ng-if="movie.reviews.length>0">
@@ -26,4 +28,14 @@
             <span class="author">{{c.user}}:</span> {{c.text}}
             <span class="time-ago" am-time-ago="c.date"></span></li>
     </ul>
+</div>
+
+<div ng-if="movie.trailers.youtube">
+<h2>Trailers</h2>
+<div class="widget">
+  <div class="video-embed" ng-repeat="trailer in movie.trailers.youtube | limitTo: 2">
+  <h3>{{trailer.name}}</h3>
+  <iframe width="560" height="315" src="//www.youtube.com/embed/{{trailer.source}}?rel=0" frameborder="0" allowfullscreen></iframe>
+  </div>
+</div>
 </div>

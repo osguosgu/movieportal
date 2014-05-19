@@ -16,7 +16,7 @@ json.reviews @hub.published_reviews do |review|
   json.(review, :id, :rating, :review, :comments, :created_at, :updated_at)
   json.user(review.user, :id, :uid, :name, :image)
   json.movie do
-    json.(review.movie, :id, :title, :year)
+    json.(review.movie, :id, :tmdb_id, :title, :year)
     json.image tmdb_poster_md(review.movie.poster_image)
   end
 end

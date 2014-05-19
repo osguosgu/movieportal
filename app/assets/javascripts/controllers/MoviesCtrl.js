@@ -129,8 +129,15 @@ MDbControllers.controller('MoviesCtrl', function ($scope, $rootScope, $statePara
     };
 
     if (!isNaN($stateParams.id)) {
-        $scope.movie = Movies.get({'Id': $stateParams.id});
-        console.log($scope.movie.backdrop);
+        console.log("boom");
+        $scope.movie = Movies.get({'Id': $stateParams.id}, {}, function(result) {
+          if ($scope.movie.id)
+            $scope.reviews = Reviews.get({'movie_id': $scope.movie.id});
+        });
+
+
+
+        //console.log($scope.movie);
     }
 
 });

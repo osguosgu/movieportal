@@ -10,8 +10,7 @@ var mdb = angular.module('mdb', [
   'ngTouch',
   'ui.bootstrap',
   'angular-growl',
-  'MDbControllers',
-  'siyfion.sfTypeahead'
+  'MDbControllers'
   ]);
 
 // routes

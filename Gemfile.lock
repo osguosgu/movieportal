@@ -75,6 +75,7 @@ GEM
       jwt (~> 0.1.4)
       multi_json (~> 1.0)
       rack (~> 1.2)
+    oj (2.9.0)
     omniauth (1.2.1)
       hashie (>= 1.2, < 3)
       rack (~> 1.0)
@@ -109,6 +110,8 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.0.4)
       sprockets-rails (~> 2.0.0)
+    rails-patch-json-encode (0.1.0)
+      multi_json
     rails_12factor (0.0.2)
       rails_serve_static_assets
       rails_stdout_logging
@@ -178,12 +181,14 @@ DEPENDENCIES
   httpauth (~> 0.2.1)
   jbuilder (~> 1.2)
   jquery-rails
+  oj
   omniauth
   omniauth-facebook (= 1.4.0)
   pg
   pry
   rabl-rails
   rails (= 4.0.4)
+  rails-patch-json-encode
   rails_12factor
   sass-rails (~> 4.0.2)
   sdoc

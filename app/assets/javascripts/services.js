@@ -41,9 +41,11 @@ mdb.factory("Search", function ($resource) {
         {
             "movies": {'method': 'GET', 'params': {'type': "movies"}, isArray: true},
             "popularMovies": {'method': 'GET', 'params': {'type': "popular"}, isArray: true},
+            "upcomingMovies": {'method': 'GET', 'params': {'type': "upcoming"}, isArray: true},
             "users": {'method': 'GET', 'params': {'type': "users"}, isArray: true},
             "hubs": {'method': 'GET', 'params': {'type': "hubs"}, isArray: true},
-            "all": {'method': 'GET', 'params': {'type': "all"}, isArray: true}
+            "all": {'method': 'GET', 'params': {'type': "all"}, isArray: true},
+            "byTmdbId": {'method': 'GET', 'params': {'type': "tmdb"}}
         }
     );
 });
