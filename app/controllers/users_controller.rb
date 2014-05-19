@@ -67,7 +67,7 @@ class UsersController < ApplicationController
       if params[:id] == 'me'
         @user = current_user
       else
-        @user = User.find(params[:id])
+        @user = User.includes(:hubs, :reviews).find(params[:id])
       end
     end
 

@@ -1,6 +1,6 @@
-
+<div ng-if="hub.name">
 <h2>{{hub.name}}
-    <a ng-if="hub.is_admin == true" class="btn btn-primary pull-right" ui-sref="hubs.create">Invite users</a>
+    <!--<a ng-if="hub.is_admin == true" class="btn btn-primary pull-right" ui-sref="hubs.create">Invite users</a>-->
     <a ng-if="hub.is_member == true && hub.is_admin == false" class="btn btn-primary pull-right" ui-sref="hubs.create">Leave hub</a>
 </h2>
 
@@ -52,7 +52,7 @@
             </div>
             <ul class="comments clearfix" ng-if="item.comments.length>0">
               <li ng-repeat="c in item.comments | orderBy:date:true | limitTo:4">
-                <span class="author">{{c.user}}:</span> {{c.comment}}
+                <span class="author"><a ng-href="#/users/{{c.user}}">{{c.user.name}}:</a></span> {{c.comment}}
                 <span class="time-ago" am-time-ago="c.date"></span></li>
             </ul>
 
@@ -84,4 +84,5 @@
     </ul>
     </section>
   </div>
+</div>
 </div>

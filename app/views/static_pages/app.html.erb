@@ -57,8 +57,8 @@
           <li ng-repeat="hub in hubs | filter:{is_member:true}"><a ng-href="#/hubs/{{hub.id}}">{{hub.name}} <span class="badge pull-right" ng-if="hub.notifications > 0">{{hub.notifications}}</span></a></li>
         </ul> <!--<a ng-href="#/hubs/{{slug(hub.name)}}">-->
       </li>
-      <li><a href="" ng-click="popup('todo')"><i class="fa fa-fw fa-lg fa-eye"></i> <span>Watchlist</span></a></li>
-      <li><a href="" ng-click="popup('todo')"><i class="fa fa-fw fa-lg fa-heart"></i> <span>Favourites</span></a></li>
+      <li><a href="#/watchlist"><i class="fa fa-fw fa-lg fa-eye"></i> <span>Watchlist</span></a></li>
+      <li><a href="#/favourites"><i class="fa fa-fw fa-lg fa-heart"></i> <span>Favourites</span></a></li>
       <li><a href="#/profile"><i class="fa fa-info"></i> Profile</a></li>
       <li><a href="<%= signout_path %>"><i class='fa fa-sign-out'></i> Logout</a></li>
     </ul>

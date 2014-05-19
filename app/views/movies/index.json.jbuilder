@@ -1,11 +1,11 @@
 json.array!(@movies) do |movie|
   json.extract! movie, :id, :title, :year, :imdb_id, :tmdb_id
   if movie.poster_image
-    json.image tmdb_poster_md(movie.poster_image)
+    json.image "#{@base}w185#{movie.poster_image}"
   end
 
   if movie.backdrop_image
-   json.backdrop tmdb_backdrop(movie.backdrop_image)
+   #json.backdrop tmdb_backdrop(movie.backdrop_image)
   end
 
   json.watchlist movie.reviews.first.watchlist

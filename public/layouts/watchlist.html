@@ -1,0 +1,34 @@
+<h2>Watchlist</h2>
+<section class="widget">
+
+  <div ng-if="wl.length == 0" class="widget-alert">You have no movies in your watchlist.</div>
+  <ul class="media-list movies-recommended">
+    <li class="media" ng-repeat="item in wl = (movies | orderBy:predicate | filter: {watchlist:true})">
+      <a class="pull-left" href="#">
+        <img class="media-object" alt="" ng-src="{{item.image}}">
+      </a>
+      <div class="media-body">
+        <h4 class="media-heading">
+          <a ng-href="#/movies/{{item.tmdb_id}}">{{item.title}} ({{item.year}})</a>
+          <a href="" ng-click="toggleFav(item)" ng-class="{active: item.favourite}"><i class="pull-right fa fa-fw fa-heart"></i></a>
+          <a href="" ng-click="toggleWatchlist(item)" ng-class="{active: item.watchlist}"><i class="pull-right fa fa-fw fa-eye"></i></a>
+        </h4>
+        <ul class="details">
+          <!--<li><strong><a href="#">TMDb:</a></strong> {{item.rating}} from {{item.votes}} users</li>-->
+          <li class="genres" ng-if="item.genres">
+            <span ng-repeat="genre in item.genres">{{genre}}</span>
+          </li>
+        </ul>
+        <div class="plot">
+          {{item.plot}}
+        </div>
+        <ul class="comments clearfix" ng-if="item.comments.length>0">
+          <li ng-repeat="c in item.comments | orderBy:date:true | limitTo:4">
+            <span class="author">{{c.user}}:</span> {{c.comment}}
+            <span class="time-ago" am-time-ago="c.date"></span></li>
+        </ul>
+
+      </div>
+    </li>
+  </ul>
+</section>

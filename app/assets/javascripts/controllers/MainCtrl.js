@@ -45,9 +45,11 @@ MDbControllers.controller('MainCtrl', function($scope, $rootScope, $state, growl
     $scope.toggleWatchlist = function(movie) {
         Reviews.metadata({movie_id:  (movie.tmdb_id ||  movie.id), watchlist: !movie.watchlist}, function(response) {
             $scope.popup(movie.title + (!movie.watchlist ? " added to" : " removed from") + " watchlist.");
-            movie.watchlist = !movie.watchlist;
+            //movie.watchlist = !movie.watchlist;
             if (!movie.tmdb_id) {
+              response.watchlist = true;
               $rootScope.movies.push(response);
+              movie = response;
             }
             else
               movie.watchlist = !movie.watchlist;
@@ -59,7 +61,9 @@ MDbControllers.controller('MainCtrl', function($scope, $rootScope, $state, growl
             $scope.popup(movie.title + (!movie.favourite ? " added to" : " removed from") + " favourites.");
 
             if (!movie.tmdb_id) {
+              response.favourite = true;
               $rootScope.movies.push(response);
+              movie = response;
             }
             else
               movie.favourite = !movie.favourite;
@@ -94,7 +98,8 @@ MDbControllers.controller('MainCtrl', function($scope, $rootScope, $state, growl
     ];
 
     $rootScope.movies = Movies.query();
-    $rootScope.popular = Search.popularMovies();
+
+    //$rootScope.popular = Search.popularMovies();
     $rootScope.upcoming = Search.upcomingMovies();
     /*
         {

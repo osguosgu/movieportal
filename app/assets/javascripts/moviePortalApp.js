@@ -82,6 +82,16 @@ mdb.config(function($stateProvider, $urlRouterProvider) {
             controller: 'UsersCtrl',
             templateUrl: '../layouts/profile.html'
         })
+        .state('watchlist', {
+          url: "/watchlist",
+          controller: 'MoviesCtrl',
+          templateUrl: "../layouts/watchlist.html"
+        })
+        .state('favourites', {
+          url: "/favourites",
+          controller: 'MoviesCtrl',
+          templateUrl: "../layouts/favourites.html"
+        })
 });
 
 

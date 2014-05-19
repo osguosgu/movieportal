@@ -5,16 +5,22 @@ end
 if @movie.backdrop_image
     json.backdrop "#{$tmdb.base_url}w1280#{@movie.backdrop_image}"
 end
-json.reviews @movie.published_reviews do |json, review|
+json.reviews @movie.published_reviews do |review|
   json.user_id review.user.id
+  json.user_uid review.user.uid
   json.user review.user.name
   json.rating review.rating
   json.text review.review
-  if review.user.id == current_user.id
-    json.watchlist review.watchlist
-    json.favourite review.favourite
-  end
   json.date review.updated_at
+  json.comments review.comments do |c|
+    json.(c, :text, :created_at)
+    json.user(c.user, :id, :uid, :name)
+  end
+end
+
+if @meta != nil
+  json.watchlist @meta.watchlist
+  json.favourite @meta.favourite
 end
 
 json.tmdb @tmdb

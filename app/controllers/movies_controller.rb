@@ -7,13 +7,14 @@ class MoviesController < ApplicationController
 
     # LEFT OUTER JOIN movies with current user's review
     @movies = Movie.all.includes(:reviews).where(:reviews => { :user_id => current_user.id } )
+    @base = $tmdb.base_url
   end
 
   # GET /movies/1
   # GET /movies/1.json
   # Searches using TMDb ID instead of our own ID
   def show
-    @movie = Movie.includes(:reviews).where(:reviews => { :user_id => current_user.id } ).find_by_tmdb_id(params[:id])
+    @movie = Movie.includes(:reviews => {:comments => :user}).find_by_tmdb_id(params[:id])
     @tmdb = TMDb::Movie.find(params[:id])
     @trailers = TMDb::Movie.trailers(params[:id])
     if @movie == nil
@@ -24,6 +25,8 @@ class MoviesController < ApplicationController
           :year => @tmdb.release_date[0,4],
           :poster_image => @tmdb.poster_path,
           :backdrop_image => @tmdb.backdrop_path)
+    else
+      @meta = @movie.reviews.where(:user_id => current_user.id).first
     end
   end
 
@@ -91,6 +94,7 @@ class MoviesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_movie
       @movie = Movie.find(params[:id])
+      @base = $tmdb.base_url
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

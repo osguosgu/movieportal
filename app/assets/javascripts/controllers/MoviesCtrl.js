@@ -131,8 +131,8 @@ MDbControllers.controller('MoviesCtrl', function ($scope, $rootScope, $statePara
     if (!isNaN($stateParams.id)) {
         console.log("boom");
         $scope.movie = Movies.get({'Id': $stateParams.id}, {}, function(result) {
-          if ($scope.movie.id)
-            $scope.reviews = Reviews.get({'movie_id': $scope.movie.id});
+          //if ($scope.movie.id)
+          //  $scope.reviews = Reviews.get({'movie_id': $scope.movie.id});
         });
 
 

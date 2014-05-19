@@ -1,8 +1,8 @@
+<div ng-if="movie.title">
 <h2>{{movie.title}} ({{movie.year}})
     <ul class="icon-menu pull-right">
+        <li><a href="" ng-click="toggleFav(movie)" ng-class="{active: movie.favourite}"><i class="fa fa-fw fa-heart"></i></a></li>
         <li><a href="" ng-click="toggleWatchlist(movie)" ng-class="{active: movie.watchlist}"><i class="fa fa-fw fa-eye"></i></a></li>
-        <li><a href=""><i class="fa fa-fw fa-comment"></i></a></li>
-        <li><a href="" ng-click="remove(movie)"><i class=" fa fa-fw fa-times"></i></a></li>
     </ul>
 </h2>
 <div class="widget clearfix">
@@ -22,20 +22,42 @@
         <div class="plot">
             {{movie.tmdb.overview}}
         </div>
+      <div ng-if="movie.trailers.youtube" style="margin-top: 20px">
+      <h3>Trailers</h3>
+        <ul>
+           <li ng-repeat="trailer in movie.trailers.youtube">
+        <a target="_blank" ng-href="//www.youtube.com/watch?v={{trailer.source}}">{{trailer.name}}</a></li>
+        </ul>
+      </div>
+
+
     </div>
-    <ul class="comments clearfix" ng-if="movie.reviews.length>0">
-        <li ng-repeat="c in movie.reviews | orderBy:date:true">
-            <span class="author">{{c.user}}:</span> {{c.text}}
-            <span class="time-ago" am-time-ago="c.date"></span></li>
-    </ul>
 </div>
 
-<div ng-if="movie.trailers.youtube">
-<h2>Trailers</h2>
-<div class="widget">
-  <div class="video-embed" ng-repeat="trailer in movie.trailers.youtube | limitTo: 2">
-  <h3>{{trailer.name}}</h3>
-  <iframe width="560" height="315" src="//www.youtube.com/embed/{{trailer.source}}?rel=0" frameborder="0" allowfullscreen></iframe>
-  </div>
+<div ng-if="movie.reviews">
+<h2>Reviews</h2>
+<section class="widget">
+
+  <ul class="clearfix" ng-if="movie.reviews.length>0">
+    <li ng-repeat="review in movie.reviews | orderBy:date:true" style="list-style-type:none">
+      {{review.text}}
+      <span class="time-ago" am-time-ago="c.date"></span>
+      <div class="pull-right review-author">
+        <div class="rating-stars"><rating value="review.rating" readonly="true" max="10"></rating></div>
+        <div class="author"><img ng-src="{{user_tn(review.user_uid)}}"><a ng-href="#/users/{{review.user_id}}">{{review.user}}</a></div>
+        <div>{{ review.updated_at | amCalendar }}</div>
+      </div>
+        <ul class="comments clearfix" ng-if="review.comments">
+          <li ng-repeat="c in review.comments | orderBy:date:true | limitTo:40">
+             <span class="author"><a ng-href="#/users/{{c.user.id}}">{{c.user.name}}</a>:</span> {{c.text}}
+            <span class="time-ago" am-time-ago="c.created_at"></span>
+          </li>
+        </ul>
+    </li>
+  </ul>
+
+</section>
 </div>
+
+
 </div>
