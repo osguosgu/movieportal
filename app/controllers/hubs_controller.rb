@@ -12,7 +12,7 @@ class HubsController < ApplicationController
   # GET /hubs/1.json
   def show
     #response.headers['Content-Type'] = 'text/event-stream'
-    @hub = Hub.includes(:hub_users, :users, :published_reviews).find(params[:id])
+    @hub = Hub.includes(:hub_users, :users, :published_reviews => {:comments => :user}).find(params[:id])
   end
 
   # GET /hubs/new

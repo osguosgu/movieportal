@@ -11,10 +11,14 @@ json.users @hub.hub_users do |hub_user|
 end
 
 json.reviews @hub.published_reviews do |review|
-  json.(review, :id, :rating, :review, :comments, :created_at, :updated_at)
+  json.(review, :id, :rating, :review, :created_at, :updated_at)
   json.user(review.user, :id, :uid, :name, :image)
   json.movie do
     json.(review.movie, :id, :tmdb_id, :title, :year)
     json.image tmdb_poster_md(review.movie.poster_image)
+  end
+  json.comments review.comments do |c|
+    json.(c, :text, :created_at)
+    json.user(c.user, :id, :name)
   end
 end

@@ -32,7 +32,7 @@
 
               <ul class="comments clearfix">
                 <li ng-repeat="c in review.comments | orderBy:date:true | limitTo:40">
-                  <span class="author">{{getUser(c.user_id).name}}:</span> {{c.text}}
+                  <span class="author">{{c.user.name}}:</span> {{c.text}}
                   <span class="time-ago" am-time-ago="c.created_at"></span>
                 </li>
                 <li><input type="text" class="form-control comment-input" ng-enter="addComment(review)" ng-model="review.comment" placeholder="Comment..."></li>
