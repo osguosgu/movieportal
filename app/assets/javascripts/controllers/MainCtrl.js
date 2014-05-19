@@ -54,11 +54,12 @@ MDbControllers.controller('MainCtrl', function($scope, $rootScope, $location, $s
               movie.year = response.year;
               $rootScope.movies.push(movie);
               //movie = response;
-              console.log("pushed wl to movies");
             }
-            else
-              mov.watchlist = !movie.watchlist;
-            movie.favourite = !movie.favourite;
+            else {
+            var t = !movie.watchlist;
+              mov.watchlist = t;
+            movie.favourite = t;
+          }
         });
     };
 
@@ -77,9 +78,11 @@ MDbControllers.controller('MainCtrl', function($scope, $rootScope, $location, $s
               //console.log("pushed fav to movies");
               //console.log(response);
             }
-            else
-              mov.favourite = !movie.favourite;
-              movie.favourite = !movie.favourite;
+            else {
+              var t = !movie.favourite
+              mov.favourite = t;
+              movie.favourite = t;
+          }
         });
     };
 
