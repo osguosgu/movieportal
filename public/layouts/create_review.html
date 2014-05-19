@@ -5,17 +5,6 @@
 
     <form role="form">
 
-        <!--<pre>Model: {{review.movie | json}}</pre>-->
-
-        <script id="template/typeahead/typeahead-match.html" type="text/ng-template">
-            <a tabindex="-1" class="clearfix movie-typeahead">
-                <img ng-src="{{match.model.poster}}" class="pull-left" ng-if="match.model.poster">
-                <div ng-if="!match.model.poster" class="placeholder pull-left"></div>
-                <span bind-html-unsafe="match.label | typeaheadHighlight:query"></span> ({{match.model.release_date  | limitTo: 4}})
-            </a>
-        </script>
-
-
         <input type="text" ng-model="review.movie" placeholder="Movie title"
                typeahead="movie as movie.title for movie in autoComplete($viewValue)"
                typeahead-min-length="3" typeahead-wait-ms="300" typeahead-editable="false"

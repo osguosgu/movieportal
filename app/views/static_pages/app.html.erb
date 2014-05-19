@@ -39,7 +39,11 @@
         </a>
 
         <div class="col-xs-7">
-          <input class="form-control" type="search" placeholder="Search for movies, users or hubs" ng-model="search" options="exampleOptions" datasets="exampleData" sfTypeahead>
+          <input class="form-control has-feedback" type="search" placeholder="Search for movies" ng-model="search"
+                 typeahead="movie as movie.title for movie in autoComplete($viewValue)"
+                 typeahead-min-length="3" typeahead-wait-ms="300" typeahead-editable="false"
+                 typeahead-loading="loadingMovies" typeahead-on-select="goToMovie($item, $model, $label)">
+          <i ng-show="loadingMovies" class="fa fa-spinner fa-spin form-control-feedback"></i>>
         </div>
       </div>
     </div>
@@ -90,6 +94,13 @@
             return false;
         }
     });
+</script>
+<script id="template/typeahead/typeahead-match.html" type="text/ng-template">
+  <a tabindex="-1" class="clearfix movie-typeahead">
+    <img ng-src="{{match.model.poster}}" class="pull-left" ng-if="match.model.poster">
+    <div ng-if="!match.model.poster" class="placeholder pull-left"></div>
+    <span bind-html-unsafe="match.label | typeaheadHighlight:query"></span> ({{match.model.release_date  | limitTo: 4}})
+  </a>
 </script>
 
 </body></html>

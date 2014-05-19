@@ -1,4 +1,4 @@
-MDbControllers.controller('MainCtrl', function($scope, $rootScope, $state, growl, Hubs, Search, Users, Movies, Reviews) {
+MDbControllers.controller('MainCtrl', function($scope, $rootScope, $location, $state, $http, growl, Hubs, Search, Users, Movies, Reviews) {
 
     $scope.sidebar = false;
     $scope.search = "";
@@ -46,13 +46,19 @@ MDbControllers.controller('MainCtrl', function($scope, $rootScope, $state, growl
         Reviews.metadata({movie_id:  (movie.tmdb_id ||  movie.id), watchlist: !movie.watchlist}, function(response) {
             $scope.popup(movie.title + (!movie.watchlist ? " added to" : " removed from") + " watchlist.");
             //movie.watchlist = !movie.watchlist;
-            if (!movie.tmdb_id) {
-              response.watchlist = true;
-              $rootScope.movies.push(response);
-              movie = response;
+          var mov = _.findWhere($rootScope.movies, {tmdb_id: movie.tmdb_id});
+          if (mov == null) {
+              console.log("adding " + movie.tmdb_id);
+              movie.watchlist = true;
+              movie.image = response.img;
+              movie.year = response.year;
+              $rootScope.movies.push(movie);
+              //movie = response;
+              console.log("pushed wl to movies");
             }
             else
-              movie.watchlist = !movie.watchlist;
+              mov.watchlist = !movie.watchlist;
+            movie.favourite = !movie.favourite;
         });
     };
 
@@ -60,12 +66,19 @@ MDbControllers.controller('MainCtrl', function($scope, $rootScope, $state, growl
         Reviews.metadata({movie_id: (movie.tmdb_id ||  movie.id), favourite: !movie.favourite}, function(response) {
             $scope.popup(movie.title + (!movie.favourite ? " added to" : " removed from") + " favourites.");
 
-            if (!movie.tmdb_id) {
-              response.favourite = true;
-              $rootScope.movies.push(response);
-              movie = response;
+          var mov = _.findWhere($rootScope.movies, {tmdb_id: movie.tmdb_id});
+          if (mov == null) {
+              console.log("adding " + movie.tmdb_id);
+              movie.favourite = true;
+              movie.image = response.img;
+              movie.year = response.year;
+              $rootScope.movies.push(movie);
+              //movie = response;
+              //console.log("pushed fav to movies");
+              //console.log(response);
             }
             else
+              mov.favourite = !movie.favourite;
               movie.favourite = !movie.favourite;
         });
     };
@@ -133,4 +146,31 @@ MDbControllers.controller('MainCtrl', function($scope, $rootScope, $state, growl
     $scope.selectMovie = function(movie) {
         $scope.movie = movie;
     }
+
+    $scope.imageFilter = function(movie) {
+      return movie.poster != null && movie.poster != undefined && movie.poster != "";
+    }
+
+  // Any function returning a promise object can be used to load values asynchronously
+  $scope.autoComplete = function(val) {
+    return $http.get('/search.json', {
+      params: {
+        query: val,
+        type: 'all'
+      }
+    }).then(function(res){
+        var results = [];
+        angular.forEach(res.data, function(item){
+          results.push(item);
+          //console.log(item.title);
+        });
+        //console.log(results);
+        return results;
+      });
+  };
+
+  $scope.goToMovie = function($item, $model, $label) {
+    $scope.search = "";
+    $location.path( "/movies/" + $item.id );
+  }
 });

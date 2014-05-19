@@ -1,4 +1,4 @@
-MDbControllers.controller('MoviesCtrl', function ($scope, $rootScope, $stateParams, Movies, Reviews, Search, $http, $cookieStore, growl) {
+MDbControllers.controller('MoviesCtrl', function ($scope, $rootScope, $stateParams, Movies, Reviews, Search, $cookieStore, growl) {
 
     $scope.displayMode = $cookieStore.get("displayMode") || 0;
     $scope.movieSort = "date";
@@ -110,23 +110,7 @@ MDbControllers.controller('MoviesCtrl', function ($scope, $rootScope, $statePara
     } ;
     $scope.selected = undefined;
 
-    // Any function returning a promise object can be used to load values asynchronously
-    $scope.autoComplete = function(val) {
-        return $http.get('/search.json', {
-            params: {
-                query: val,
-                type: 'all'
-            }
-        }).then(function(res){
-                var results = [];
-                angular.forEach(res.data, function(item){
-                    results.push(item);
-                    //console.log(item.title);
-                });
-                console.log(results);
-                return results;
-            });
-    };
+
 
     if (!isNaN($stateParams.id)) {
         console.log("boom");

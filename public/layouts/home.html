@@ -5,31 +5,11 @@
       <section class="widget">
         <h3><i class="fa fa-fw fa-film"></i> Upcoming Movies</h3>
 
-        <ul class="media-list movies-recommended">
-          <li class="media" ng-repeat="item in upcoming | orderBy:predicate | filter: movieFilter">
-            <a class="pull-left" href="#">
+        <ul class="media-list movies-recommended upcoming clearfix">
+          <li class="media" ng-repeat="item in upcoming | orderBy:predicate | filter: imageFilter">
+            <a ng-href="#/movies/{{item.id}}">
               <img class="media-object" alt="" ng-src="{{item.poster}}">
             </a>
-            <div class="media-body">
-              <h4 class="media-heading">
-                <a ng-href="#/movies/{{item.id}}">{{item.title}} ({{item.release_date | limitTo:4}})</a>
-              </h4>
-              <ul class="details">
-                <!--<li><strong><a href="#">TMDb:</a></strong> {{item.rating}} from {{item.votes}} users</li>-->
-                <li class="genres" ng-if="item.genres">
-                  <span ng-repeat="genre in item.genres">{{genre}}</span>
-                </li>
-              </ul>
-              <div class="plot">
-                {{item.plot}}
-              </div>
-              <ul class="comments clearfix" ng-if="item.comments.length>0">
-                <li ng-repeat="c in item.comments | orderBy:date:true | limitTo:4">
-                  <span class="author">{{c.user}}:</span> {{c.comment}}
-                  <span class="time-ago" am-time-ago="c.date"></span></li>
-              </ul>
-
-            </div>
           </li>
         </ul>
       </section>
