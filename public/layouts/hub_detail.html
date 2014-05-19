@@ -8,7 +8,7 @@
   <div class="col-md-8">
     <section class="widget">
       <h3><i class="fa fa-fw fa-film"></i> Reviews by users</h3>
-
+      <div ng-if="hub.reviews.length==0" class="widget-alert">No reviews found.</div>
       <ul class="media-list movies-recommended">
         <li class="media" ng-repeat="review in hub.reviews | orderBy:reviewPredicate:reviewDesc">
           <a class="pull-left" href="#">

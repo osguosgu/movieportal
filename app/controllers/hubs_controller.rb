@@ -29,15 +29,11 @@ class HubsController < ApplicationController
   # POST /hubs.json
   def create
     @hub = Hub.new(hub_params)
-    if @hub.save
-      hubUser = HubUser.new(:user => current_user, :hub => @hub, :is_admin => true)
-      ok = hubUser.save
-    else
-      ok = false
-    end
+    @hub.hub_users << HubUser.new(:user => current_user, :is_admin => true)
+
 
     respond_to do |format|
-      if ok
+      if @hub.save
         format.html { redirect_to @hub, notice: 'Hub was successfully created.' }
         format.json { render action: 'show', status: :created, location: @hub }
       else
@@ -64,15 +60,17 @@ class HubsController < ApplicationController
   def join
     #if @hub.privacy == Hub::PRIVACY_PUBLIC
     #@hub = Hub.find(params[:Id])
-    @hub.users << current_user
-      if @hub.save
-        render action: 'show', status: :created, location: @hub
-      else
-        render json: @review.errors, status: :unprocessable_entity
-      end
-    #end
-    logger.debug("end")
-    render.json { head :no_content }
+    unless @hubs.users.exists?(:conditions => { :user_id => current_user.id })
+      @hub.users << current_user
+        if @hub.save
+          render action: 'show', status: :created, location: @hub
+        else
+          render json: @review.errors, status: :unprocessable_entity
+        end
+      #end
+      logger.debug("end")
+      render.json { head :no_content }
+    end
   end
 
   def leave
