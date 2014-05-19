@@ -60,7 +60,7 @@ class HubsController < ApplicationController
   def join
     #if @hub.privacy == Hub::PRIVACY_PUBLIC
     #@hub = Hub.find(params[:Id])
-    unless @hubs.users.exists?(:conditions => { :user_id => current_user.id })
+    unless @hubs.users.exists?(:conditions => { :user_id => current_user.id, :hub_id => params[:Id] })
       @hub.users << current_user
         if @hub.save
           render action: 'show', status: :created, location: @hub
